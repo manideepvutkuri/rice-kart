@@ -1,0 +1,12 @@
+.table {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+th, td {
+    vertical-align: middle !important;
+}
+
+h2 {
+    font-weight: bold;
+}
