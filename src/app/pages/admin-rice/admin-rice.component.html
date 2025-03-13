@@ -1,0 +1,35 @@
+<div class="container mt-4">
+    <h2>Add Rice Variety</h2>
+    
+    <div class="mb-3">
+      <input type="text" [(ngModel)]="newRiceVariety.name" placeholder="Rice Name" class="form-control">
+    </div>
+  
+    <div class="mb-3">
+      <input type="number" [(ngModel)]="newRiceVariety.price" placeholder="Price" class="form-control">
+    </div>
+  
+    <div class="mb-3">
+      <textarea [(ngModel)]="newRiceVariety.description" placeholder="Description" class="form-control"></textarea>
+    </div>
+  
+    <!-- <div class="mb-3">
+      <input type="file" (change)="onFileSelected($event)" class="form-control">
+    </div> -->
+
+    <div class="mb-3">
+        <label for="riceImageUrl">Rice Image URL</label>
+        <input type="text" id="riceImageUrl" [(ngModel)]="newRiceVariety.imageUrl" class="form-control" placeholder="Enter Image URL">
+      </div>
+      
+  
+    <button (click)="addRiceVariety()" class="btn btn-primary">Add Rice Variety</button>
+  
+    <h3 class="mt-4">Rice Varieties</h3>
+    <ul>
+      <li *ngFor="let rice of riceVarieties">
+         {{ rice.name }} - ₹{{ rice.price }} {{ rice.description }} <img [src]="rice.imageUrl" width="100">
+      </li>
+    </ul>
+  </div>
+  

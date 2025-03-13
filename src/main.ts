@@ -19,6 +19,8 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './app/guards/auth.guard';
 import { AdminGuard } from './app/guards/admin.guard';
 import { OrderHistoryComponent } from './app/pages/order-history/order-history.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminRiceComponent } from './app/pages/admin-rice/admin-rice.component';
 
 // ✅ Firebase configuration (replace with your own Firebase keys)
 const firebaseConfig = {
@@ -38,13 +40,14 @@ const routes: Routes = [
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'order-history', component: OrderHistoryComponent },
+  { path: 'admin-rice', component: AdminRiceComponent },
   { path: '**', redirectTo: '' }
 ];
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(CommonModule,FormsModule),
+    importProvidersFrom(CommonModule,FormsModule,HttpClientModule),
 
     // ✅ Provide Firebase services directly
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
