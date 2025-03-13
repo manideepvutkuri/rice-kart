@@ -46,4 +46,13 @@ export class HeaderComponent implements OnInit {
   isLoginPage(): boolean {
     return this.router.url.includes('/auth');
   }
+  navigateToOrderHistory() {
+    this.router.navigate(['/order-history']);
+  }
+  navigateToHome(){
+    this.router.navigate(['/home']);
+  }
+  gotoadmin(){
+    this.router.navigate(['/admin']);
+  }
 }

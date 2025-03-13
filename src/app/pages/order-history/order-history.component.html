@@ -1,0 +1,160 @@
+<!-- <table *ngIf="orders.length > 0" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Total Amount</th>
+        <th>Status</th>
+        <th>Items</th>
+        <th>Order Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.id }}</td>
+        <td>₹{{ order.totalAmount }}</td>
+        <td>
+          <span class="badge"
+            [ngClass]="{
+              'bg-success': order.status === 'Completed',
+              'bg-warning': order.status === 'Pending',
+              'bg-danger': order.status === 'Cancelled'
+            }">
+            {{ order.status }}
+          </span>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let item of order.items">
+              {{ item.name }} - ₹{{ item.price }} x {{ item.quantity }}
+            </li>
+          </ul>
+        </td>
+        <td>{{ order.timestamp?.seconds * 1000 | date: 'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+   -->
+
+
+   <!-- <div class="container mt-4">
+    <h2 class="text-center text-2xl font-semibold mb-4">Order History</h2>
+  
+    <table class="table-auto w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2 text-left">Order ID</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Total Amount</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Status</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Items</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Order Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders" class="hover:bg-gray-100">
+          <td class="border border-gray-300 px-4 py-2">{{ order.id }}</td>
+          <td class="border border-gray-300 px-4 py-2">₹{{ order.totalAmount }}</td>
+          <td class="border border-gray-300 px-4 py-2">
+            <span class="badge"
+            [ngClass]="{
+              'bg-success': order.status === 'Completed',
+              'bg-warning': order.status === 'Pending',
+              'bg-danger': order.status === 'Cancelled'
+            }">
+            {{ order.status }}
+          </span>
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            <ul>
+              <li *ngFor="let item of order.items" class="flex items-center space-x-2">
+                <img [src]="item.image" alt="{{ item.name }}" width="50" height="50" class="rounded-lg shadow-md">
+                <span>{{ item.name }} - ₹{{ item.price }} x {{ item.quantity }}</span>
+              </li>
+            </ul>
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            {{ order.timestamp.seconds * 1000 | date:'short' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="orders.length === 0" class="mt-4 text-center text-gray-500">
+      No past orders found.
+    </div>
+  </div>
+   -->
+
+
+   <!-- <div class="container mt-5">
+    <h2 class="text-center mb-4">Order History</h2>
+    <div *ngIf="orders.length === 0" class="alert alert-info text-center">
+      No past orders found.
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4" *ngFor="let order of orders">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Order ID: {{ order.id }}</h5>
+            <p class="card-text">
+              <strong>Total Amount:</strong> ₹{{ order.totalAmount }}
+            </p>
+            <p>
+                <strong>status: </strong><span class="badge bg-warning text-dark">{{ order.status }}</span>
+            </p>
+            <p class="card-text">
+              <strong>Order Date:</strong> {{ order.timestamp?.seconds * 1000 | date:'MMM d, y h:mm a' }}
+            </p>
+            <hr />
+            <h6>Items:</h6>
+            <div *ngFor="let item of order.items" class="d-flex align-items-center mb-2">
+              <img [src]="item.image" alt="{{ item.name }}" class="img-thumbnail me-2" style="width: 60px; height: 60px;" />
+              <span>{{ item.name }} - ₹{{ item.price }} x</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+  <div class="container mt-5">
+    <h2 class="text-center fw-bold mb-4">📦 Your Order History</h2>
+  
+    <div *ngIf="orders.length === 0" class="alert alert-info text-center">
+      No past orders found.
+    </div>
+  
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let order of orders">
+        <div class="card shadow-lg rounded-3 border-0">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-primary">Order ID: {{ order.id }}</h5>
+            <p class="text-dark"><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
+            <!-- <p>
+              <strong>status: </strong> <span class="badge bg-warning text-dark px-3 py-2">{{ order.status }}</span>
+            </p> -->
+            <span class="badge"
+            [ngClass]="{
+              'bg-success': order.status === 'Delivered',
+              'bg-warning': order.status === 'Pending',
+              'bg-danger': order.status === 'Cancelled'
+            }">
+            {{ order.status }}
+          </span>
+            <p class="text-secondary">
+              <strong>Order Date:</strong> {{ order.timestamp?.seconds * 1000 | date:'MMM d, y h:mm a' }}
+            </p>
+            <hr />
+            <h6 class="fw-bold">🛒 Ordered Items:</h6>
+            <div *ngFor="let item of order.items" class="d-flex align-items-center p-2 border rounded bg-light mb-2">
+              <img [src]="item.image" alt="{{ item.name }}" class="img-thumbnail me-3" style="width: 50px; height: 50px; border-radius: 10px;" />
+              <span class="fw-semibold">{{ item.name }} - ₹{{ item.price }} x</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

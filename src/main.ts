@@ -18,6 +18,7 @@ import { AuthComponent } from './app/pages/auth/auth.component';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './app/guards/auth.guard';
 import { AdminGuard } from './app/guards/admin.guard';
+import { OrderHistoryComponent } from './app/pages/order-history/order-history.component';
 
 // ✅ Firebase configuration (replace with your own Firebase keys)
 const firebaseConfig = {
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'auth', component: AuthComponent },
+  { path: 'order-history', component: OrderHistoryComponent },
   { path: '**', redirectTo: '' }
 ];
 

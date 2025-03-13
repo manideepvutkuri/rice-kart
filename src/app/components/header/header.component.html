@@ -1,4 +1,4 @@
-<header class="navbar" *ngIf="!isLoginPage()">
+<!-- <header class="navbar" *ngIf="!isLoginPage()">
     <div class="logo">
         <a routerLink="/">🍚 Rice Store</a>
     </div>
@@ -11,7 +11,26 @@
         Logout ({{ user.email }})
       </button>
       
-      <!-- <a *ngIf="!(authService.user$ | async)" routerLink="/auth">Login</a> -->
+      <a *ngIf="!(authService.user$ | async)" routerLink="/auth">Login</a>
       <button *ngIf="!(authService.user$ | async)" (click)="navigateToLogin()">Login</button>
 
+</header> -->
+
+<header class="navbar" *ngIf="!isLoginPage()">
+    <div class="logo">
+        <a routerLink="/">🍚 Rice Store</a>
+    </div>
+    <nav>
+        <button (click)="navigateToHome()">Home</button>
+        <a routerLink="/cart">Cart ({{ cartCount }})</a>
+        <button *ngIf="authService.user$ | async" routerLink="/order-history" (click)="navigateToOrderHistory()" routerLinkActive="active">Order History</button>
+    </nav>
+    
+    <button *ngIf="isAdmin$ | async" (click)="gotoadmin()">Admin Panel</button>  
+
+    <button *ngIf="(authService.user$ | async) as user" (click)="logout()">
+        Logout ({{ user.email }})
+    </button>
+    
+    <button *ngIf="!(authService.user$ | async)" (click)="navigateToLogin()">Login</button>
 </header>
