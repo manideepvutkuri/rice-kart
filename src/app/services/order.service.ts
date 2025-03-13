@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, updateDoc, doc } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { query, where, orderBy } from '@angular/fire/firestore';
@@ -54,6 +54,9 @@ export class OrderService {
     });
   }
   
-  
+  updateOrderStatus(orderId: string, newStatus: string): Promise<void> {
+    const orderRef = doc(this.firestore, `orders/${orderId}`);
+    return updateDoc(orderRef, { status: newStatus });
+  }
 
 }

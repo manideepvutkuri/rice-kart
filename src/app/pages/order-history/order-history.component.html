@@ -133,10 +133,12 @@
             <!-- <p>
               <strong>status: </strong> <span class="badge bg-warning text-dark px-3 py-2">{{ order.status }}</span>
             </p> -->
+            <strong>status: </strong> 
             <span class="badge"
             [ngClass]="{
               'bg-success': order.status === 'Delivered',
               'bg-warning': order.status === 'Pending',
+              'bg-primary': order.status === 'Shipped',
               'bg-danger': order.status === 'Cancelled'
             }">
             {{ order.status }}

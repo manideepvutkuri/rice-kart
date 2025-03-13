@@ -1,61 +1,41 @@
-<!-- <h2>Admin Dashboard</h2>
-
-<h3>Orders List</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Order ID</th>
-      <th>User Email</th>
-      <th>Items</th>
-      <th>Total Price</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let order of orders">
-      <td>{{ order.id }}</td>
-      <td>{{ order.userEmail }}</td>
-      <td>
-        <ul>
-          <li *ngFor="let item of order.items">{{ item.name }} - ₹{{ item.price }}</li>
-        </ul>
-      </td>
-      <td>₹{{ order.totalPrice }}</td>
-      <td>{{ order.status }}</td>
-    </tr>
-  </tbody>
-</table> -->
-
 <div class="container mt-4">
   <h2 class="mb-4 text-primary fw-bold">Admin Dashboard</h2>
   <h3 class="mb-3">Orders List</h3>
 
   <div class="table-responsive">
-      <table class="table table-bordered table-striped text-center align-middle">
-          <thead class="table-dark">
-              <tr>
-                  <th>Order ID</th>
-                  <th>User Email</th>
-                  <th>Items</th>
-                  <th>Total Price</th>
-                  <th>Status</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let order of orders">
-                  <td>{{ order.id }}</td>
-                  <td>{{ order.userEmail }}</td>
-                  <td>
-                      <ul class="list-unstyled mb-0">
-                          <li *ngFor="let item of order.items">{{ item.name }} - ₹{{ item.price }}</li>
-                      </ul>
-                  </td>
-                  <td><strong>₹{{ order.totalAmount }}</strong></td>
-                  <td>
-                      <span class="badge bg-warning text-dark">{{ order.status }}</span>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
+    <table class="table table-bordered table-striped text-center align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Order ID</th>
+          <th>User Email</th>
+          <th>Items</th>
+          <th>Total Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.userEmail }}</td>
+          <td>
+            <ul class="list-unstyled mb-0">
+              <li *ngFor="let item of order.items">{{ item.name }} - ₹{{ item.price }}</li>
+            </ul>
+          </td>
+          <td><strong>₹{{ order.totalAmount }}</strong></td>
+          <td>
+            <select class="form-select"
+              [(ngModel)]="order.status"  
+              (change)="updateOrderStatus(order.id, order.status)">
+              <option value="Pending">Pending</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
