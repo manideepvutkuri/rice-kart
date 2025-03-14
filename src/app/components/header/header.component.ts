@@ -55,4 +55,7 @@ export class HeaderComponent implements OnInit {
   gotoadmin(){
     this.router.navigate(['/admin']);
   }
+  adminProd(){
+    this.router.navigate(['/admin-rice']);
+  }
 }

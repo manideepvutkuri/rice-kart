@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Firestore, collection, addDoc, doc, updateDoc, deleteDoc, collectionData } from '@angular/fire/firestore';
 import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { RiceVariety } from '../models/rice-variety.model';
 export class AdminRiceService {
   private collectionName = 'riceVarieties';
 
-  constructor(private firestore: Firestore, private storage: Storage) {}
+  constructor(private firestore: Firestore, private storage: Storage, private ngZone: NgZone) {}
 
   // Upload Image to Firebase Storage and return URL
   // async uploadImage(file: File): Promise<string> {
@@ -27,9 +27,16 @@ export class AdminRiceService {
   }
 
   // Fetch all rice varieties
+  // getAllRiceVarieties(): Observable<RiceVariety[]> {
+  //   const riceCollection = collection(this.firestore, this.collectionName);
+  //   return collectionData(riceCollection, { idField: 'id' }) as Observable<RiceVariety[]>;
+  // }
+
   getAllRiceVarieties(): Observable<RiceVariety[]> {
-    const riceCollection = collection(this.firestore, this.collectionName);
-    return collectionData(riceCollection, { idField: 'id' }) as Observable<RiceVariety[]>;
+    return this.ngZone.runOutsideAngular(() => {  // ✅ Prevent zone issues
+      const riceCollection = collection(this.firestore, this.collectionName);
+      return collectionData(riceCollection, { idField: 'id' }) as Observable<RiceVariety[]>;
+    });
   }
 
   // Update rice variety

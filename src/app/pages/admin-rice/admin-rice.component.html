@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<!-- <div class="container mt-4">
     <h2>Add Rice Variety</h2>
     
     <div class="mb-3">
@@ -13,9 +13,7 @@
       <textarea [(ngModel)]="newRiceVariety.description" placeholder="Description" class="form-control"></textarea>
     </div>
   
-    <!-- <div class="mb-3">
-      <input type="file" (change)="onFileSelected($event)" class="form-control">
-    </div> -->
+  
 
     <div class="mb-3">
         <label for="riceImageUrl">Rice Image URL</label>
@@ -26,10 +24,97 @@
     <button (click)="addRiceVariety()" class="btn btn-primary">Add Rice Variety</button>
   
     <h3 class="mt-4">Rice Varieties</h3>
-    <ul>
-      <li *ngFor="let rice of riceVarieties">
-         {{ rice.name }} - ₹{{ rice.price }} {{ rice.description }} <img [src]="rice.imageUrl" width="100">
-      </li>
-    </ul>
+   
+    <div *ngFor="let rice of riceVarieties">
+        <img [src]="rice.imageUrl" alt="{{ rice.name }}" width="100">
+        
+        <p>{{ rice.name }} - ₹{{ rice.price }} {{ rice.description }} </p>
+        <button (click)="editRiceVariety(rice)">Edit</button>
+        <button (click)="deleteRiceVariety(rice.id!)">Delete</button>
+      </div>
+      
+      <div *ngIf="isEditing">
+       <div class="mb-3"><input type="text" [(ngModel)]="selectedRice.name"></div> 
+       <div class="mb-3"> <input type="number" [(ngModel)]="selectedRice.price"> </div>
+       <div class="mb-3">  <textarea [(ngModel)]="selectedRice.description"></textarea></div>
+        <div class="mb-3"> <input type="text" [(ngModel)]="selectedRice.imageUrl"> </div>
+        <button (click)="updateRiceVariety()">Update</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </div>
   </div>
+
   
+  
+   -->
+
+   <div class="container mt-4">
+    <!-- Title -->
+    <h2 class="text-center mb-4">Manage Rice Varieties</h2>
+
+    <!-- Add Rice Variety Form -->
+    <div class="card shadow p-4">
+        <h4 class="mb-3">Add Rice Variety</h4>
+        
+        <div class="mb-3">
+            <input type="text" [(ngModel)]="newRiceVariety.name" placeholder="Rice Name" class="form-control">
+        </div>
+    
+        <div class="mb-3">
+            <input type="number" [(ngModel)]="newRiceVariety.price" placeholder="Price" class="form-control">
+        </div>
+    
+        <div class="mb-3">
+            <textarea [(ngModel)]="newRiceVariety.description" placeholder="Description" class="form-control"></textarea>
+        </div>
+    
+        <div class="mb-3">
+            <label for="riceImageUrl" class="form-label">Rice Image URL</label>
+            <input type="text" id="riceImageUrl" [(ngModel)]="newRiceVariety.imageUrl" class="form-control" placeholder="Enter Image URL">
+        </div>
+
+        <button (click)="addRiceVariety()" class="btn btn-primary w-100">Add Rice Variety</button>
+    </div>
+
+    <!-- Rice Varieties List -->
+    <h3 class="mt-5">Rice Varieties</h3>
+
+    <div class="row">
+        <div *ngFor="let rice of riceVarieties" class="col-md-4">
+            <div class="card shadow-sm p-3 mb-4">
+                <img [src]="rice.imageUrl" class="card-img-top" alt="{{ rice.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ rice.name }} - ₹{{ rice.price }}</h5>
+                    <p class="card-text">{{ rice.description }}</p>
+                    <button (click)="editRiceVariety(rice)" class="btn btn-warning btn-sm">Edit</button>
+                    <button (click)="deleteRiceVariety(rice.id!)" class="btn btn-danger btn-sm ms-2">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Rice Variety Form -->
+    <div *ngIf="isEditing && selectedRice" class="card shadow-lg p-4 mt-4">
+        <h4 class="mb-3">Edit Rice Variety</h4>
+        
+        <div class="mb-3">
+            <input type="text" [(ngModel)]="selectedRice.name" class="form-control" placeholder="Rice Name">
+        </div>
+
+        <div class="mb-3">
+            <input type="number" [(ngModel)]="selectedRice.price" class="form-control" placeholder="Price">
+        </div>
+
+        <div class="mb-3">
+            <textarea [(ngModel)]="selectedRice.description" class="form-control" placeholder="Description"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <input type="text" [(ngModel)]="selectedRice.imageUrl" class="form-control" placeholder="Image URL">
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button (click)="updateRiceVariety()" class="btn btn-success w-50 me-2">Update</button>
+            <button (click)="cancelEdit()" class="btn btn-secondary w-50">Cancel</button>
+        </div>
+    </div>
+</div>
