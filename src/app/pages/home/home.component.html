@@ -25,21 +25,21 @@
 
 
 
-<!-- Header -->
-<header class="header">
+
+<!-- <header class="header">
     <div class="logo">RiceMart</div>
     <nav>
       <a routerLink="/cart" class="cart-button">🛒 Cart ({{ (cartService.getCartItems() | async)?.length || 0  }})</a>
     </nav>
   </header>
   <div class="home-container">
-  <!-- Hero Section -->
+
   <section class="hero">
     <h1>Discover the Finest Quality Rice</h1>
     <p>Hand-picked & organically sourced for your kitchen.</p>
   </section>
   
-  <!-- Product Grid -->
+  
   <div class="product-container">
     <div class="product-card" *ngFor="let product of products">
       <img [src]="product.image" alt="{{ product.name }}">
@@ -49,6 +49,37 @@
         <a [routerLink]="['/product', product.id]" [state]="{ product: product }" class="details-button">
           View Details
         </a>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<header class="header">
+  <div class="logo">RiceMart</div>
+  <nav>
+    <a routerLink="/cart" class="cart-button">
+      🛒 Cart ({{ (cartService.getCartItems() | async)?.length || 0 }})
+    </a>
+  </nav>
+</header>
+
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Discover the Finest Quality Rice</h1>
+    <p>Hand-picked & organically sourced for your kitchen.</p>
+  </section>
+
+  <!-- Product Grid -->
+  <div class="product-container">
+    <div class="product-card" *ngFor="let rice of riceVarieties">
+      <img [src]="rice.imageUrl" alt="{{ rice.name }}">
+      <div class="product-info">
+        <h3>{{ rice.name }}</h3>
+        <p class="price">₹{{ rice.price }}</p>
+        <button (click)="viewDetails(rice)" class="details-button">
+          View Details
+        </button>
       </div>
     </div>
   </div>

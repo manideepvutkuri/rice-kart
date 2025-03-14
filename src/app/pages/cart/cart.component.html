@@ -4,7 +4,7 @@
     <div *ngIf="cartItems.length > 0; else emptyCart">
       <div class="row" *ngFor="let item of cartItems; let i = index">
         <div class="col-4">
-          <img [src]="item.image" alt="{{ item.name }}" class="img-fluid rounded">
+          <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-fluid rounded">
         </div>
         <div class="col-8">
           <h5>{{ item.name }}</h5>

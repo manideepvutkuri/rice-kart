@@ -25,7 +25,7 @@
   </div> -->
 
   
-  <div class="product-details-container">
+  <!-- <div class="product-details-container">
     <div class="product-image">
       <img [src]="product.image" alt="{{ product.name }}">
     </div>
@@ -40,5 +40,19 @@
         <button (click)="goBack()" class="back-button">Back</button>
       </div>
     </div>
+  </div> -->
+  
+  <div class="container mt-4">
+    <div class="card">
+      <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.name }}">
+      <div class="card-body">
+        <h2 class="card-title">{{ product.name }}</h2>
+        <p class="card-text"><strong>Price:</strong> ₹{{ product.price }}</p>
+        <p class="card-text">{{ product.description }}</p>
+        <button class="btn btn-primary" (click)="buyProduct(product)">Add to Cart</button>
+      </div>
+    </div>
   </div>
+  
+  
   
