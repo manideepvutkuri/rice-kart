@@ -58,4 +58,7 @@ export class HeaderComponent implements OnInit {
   adminProd(){
     this.router.navigate(['/admin-rice']);
   }
+  cart(){
+    this.router.navigate(['/cart']);
+  }
 }

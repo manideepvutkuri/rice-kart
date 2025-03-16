@@ -52,26 +52,112 @@
 // }
 
 
+// import { Injectable } from '@angular/core';
+// import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, onAuthStateChanged } from '@angular/fire/auth';
+// import { Router } from '@angular/router';
+// import { BehaviorSubject, Observable, of } from 'rxjs';
+// import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+// import { switchMap } from 'rxjs/operators';
+
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class AuthService {
+//   private userSubject = new BehaviorSubject<{ uid: string; email: string | null; role: string } | null>(null);
+//   user$ = this.userSubject.asObservable();
+
+//   constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
+//     onAuthStateChanged(this.auth, async (user) => {
+//       if (user) {
+//         const role = await this.getUserRole(user.uid);
+//         const userData = { uid: user.uid, email: user.email, role };
+//         localStorage.setItem('user', JSON.stringify(userData)); // Store user with role
+//         console.log('User logged in:', userData);
+//         this.userSubject.next(userData);
+//       } else {
+//         localStorage.removeItem('user');
+//         this.userSubject.next(null);
+//       }
+//     });
+//   }
+
+//   // 🔹 Sign Up & Save Role in Firestore
+//   async signUp(email: string, password: string, role: string = 'user') {
+//     try {
+//       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+//       await setDoc(doc(this.firestore, 'users', userCredential.user.uid), {
+//         email,
+//         role,  // 🔹 Store role in Firestore
+//       });
+//       return userCredential.user;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+
+//   // 🔹 Login & Fetch Role from Firestore
+//   async login(email: string, password: string) {
+//     try {
+//       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+//       const role = await this.getUserRole(userCredential.user.uid);
+//       const userData = { uid: userCredential.user.uid, email: userCredential.user.email, role };
+//       localStorage.setItem('user', JSON.stringify(userData));
+//       this.userSubject.next(userData);
+//       return userData;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+
+//   // 🔹 Logout
+//   async logout() {
+//     await signOut(this.auth);
+//     localStorage.removeItem('user');
+//     this.userSubject.next(null);
+//     this.router.navigate(['/auth']);
+//   }
+
+//   // 🔹 Fetch User Role from Firestore
+//   private async getUserRole(uid: string): Promise<string> {
+//     const userDocRef = doc(this.firestore, 'admins', uid);
+//     const userDoc = await getDoc(userDocRef);
+  
+//     if (userDoc.exists()) {
+//       const userData = userDoc.data();
+//       console.log('Firestore User Data:', userData); // ✅ Debug Firestore data
+//       console.log('User Role from Firestore:', userData['role']); // ✅ Debug role field
+//       return userData['role'] || 'user';
+//     }
+  
+//     console.warn(`No user document found for UID: ${uid}`);
+//     return 'user'; // Default role if not found
+//   }
+  
+
+//   // 🔹 Get Current User with Role
+//   getCurrentUser(): Observable<{ uid: string; email: string | null; role: string } | null> {
+//     return this.user$;
+//   }
+// }
+
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
-import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<{ uid: string; email: string | null; role: string } | null>(null);
+  private userSubject = new BehaviorSubject<{ uid: string; email: string | null; role: string; name?: string; address?: string } | null>(null);
   user$ = this.userSubject.asObservable();
 
   constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
-        const role = await this.getUserRole(user.uid);
-        const userData = { uid: user.uid, email: user.email, role };
-        localStorage.setItem('user', JSON.stringify(userData)); // Store user with role
+        const userData = await this.getUserRole(user.uid);
+        localStorage.setItem('user', JSON.stringify(userData)); // Store user details locally
         console.log('User logged in:', userData);
         this.userSubject.next(userData);
       } else {
@@ -81,30 +167,33 @@ export class AuthService {
     });
   }
 
-  // 🔹 Sign Up & Save Role in Firestore
-  async signUp(email: string, password: string, role: string = 'user') {
+  // 🔹 Signup: Store user data in Firestore
+  async signUp(name: string, email: string, password: string, address: string, role: string = 'user') {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      await setDoc(doc(this.firestore, 'users', userCredential.user.uid), {
-        email,
-        role,  // 🔹 Store role in Firestore
-      });
-      return userCredential.user;
+      const user = userCredential.user;
+
+      // Save user details in Firestore
+      await setDoc(doc(this.firestore, 'users', user.uid), { name, email, address, role });
+
+      return user;
     } catch (error) {
+      console.error('Signup Error:', error);
       throw error;
     }
   }
 
-  // 🔹 Login & Fetch Role from Firestore
+  // 🔹 Login: Fetch user role from Firestore
   async login(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-      const role = await this.getUserRole(userCredential.user.uid);
-      const userData = { uid: userCredential.user.uid, email: userCredential.user.email, role };
+      const userData = await this.getUserRole(userCredential.user.uid);
+
       localStorage.setItem('user', JSON.stringify(userData));
       this.userSubject.next(userData);
       return userData;
     } catch (error) {
+      console.error('Login Error:', error);
       throw error;
     }
   }
@@ -117,25 +206,35 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
-  // 🔹 Fetch User Role from Firestore
-  private async getUserRole(uid: string): Promise<string> {
-    const userDocRef = doc(this.firestore, 'admins', uid);
-    const userDoc = await getDoc(userDocRef);
-  
+  // 🔹 Fetch user data from Firestore (checks both `admins` and `users` collections)
+  private async getUserRole(uid: string): Promise<{ uid: string; email: string | null; role: string; name?: string; address?: string }> {
+    // Check `admins` collection first
+    let userDocRef = doc(this.firestore, 'admins', uid);
+    let userDoc = await getDoc(userDocRef);
+
     if (userDoc.exists()) {
       const userData = userDoc.data();
-      console.log('Firestore User Data:', userData); // ✅ Debug Firestore data
-      console.log('User Role from Firestore:', userData['role']); // ✅ Debug role field
-      return userData['role'] || 'user';
+      console.log('Admin found:', userData);
+      return { uid, email: userData['email'] || null, role: 'admin', name: userData['name'], address: userData['address'] };
     }
-  
-    console.warn(`No user document found for UID: ${uid}`);
-    return 'user'; // Default role if not found
-  }
-  
 
-  // 🔹 Get Current User with Role
-  getCurrentUser(): Observable<{ uid: string; email: string | null; role: string } | null> {
+    // If not an admin, check `users` collection
+    userDocRef = doc(this.firestore, 'users', uid);
+    userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      console.log('User found:', userData);
+      return { uid, email: userData['email'] || null, role: 'user', name: userData['name'], address: userData['address'] };
+    }
+
+    console.warn(`No user document found for UID: ${uid}`);
+    return { uid, email: null, role: 'user' }; // Default role
+  }
+
+  // 🔹 Get Current User as an Observable
+  getCurrentUser(): Observable<{ uid: string; email: string | null; role: string; name?: string; address?: string } | null> {
     return this.user$;
   }
 }
+

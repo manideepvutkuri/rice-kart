@@ -13,7 +13,7 @@
     </p>
   </div>
    -->
-
+<!-- 
    <div class="d-flex justify-content-center align-items-center vh-100 auth-bg">
     <div class="glass-card">
       <h2 class="text-center fw-bold text-primary"> {{ isLoginMode ? 'Login' : 'Signup' }} </h2>
@@ -34,6 +34,54 @@
   
       <div class="text-center mt-3">
         <small class="text-white">{{ isLoginMode ? 'New user?' : 'Already have an account?' }}</small>
+        <button type="button" class="btn btn-link fw-bold p-0 text-primary" (click)="toggleMode()">
+          {{ isLoginMode ? 'Sign Up' : 'Login' }}
+        </button>
+      </div>
+    </div>
+  </div> -->
+  
+
+
+  <div class="d-flex justify-content-center align-items-center vh-100 auth-bg">
+    <div class="glass-card">
+      <h2 class="text-center fw-bold text-primary">
+        {{ isLoginMode ? 'Login' : 'Signup' }}
+      </h2>
+  
+      <form (ngSubmit)="onSubmit()">
+        <!-- Show Name field only in Signup Mode -->
+        <div class="mb-3" *ngIf="!isLoginMode">
+          <input type="text" class="form-control custom-input" [(ngModel)]="name" name="name" required placeholder="Enter Full Name">
+        </div>
+  
+        <div class="mb-3">
+          <input type="email" class="form-control custom-input" [(ngModel)]="email" name="email" required placeholder="Enter Email">
+        </div>
+  
+        <div class="mb-3">
+          <input type="password" class="form-control custom-input" [(ngModel)]="password" name="password" required placeholder="Enter Password">
+        </div>
+  
+        <!-- Show Confirm Password field only in Signup Mode -->
+        <div class="mb-3" *ngIf="!isLoginMode">
+          <input type="password" class="form-control custom-input" [(ngModel)]="confirmPassword" name="confirmPassword" required placeholder="Confirm Password">
+        </div>
+  
+        <!-- Show Address field only in Signup Mode -->
+        <div class="mb-3" *ngIf="!isLoginMode">
+          <textarea class="form-control custom-input" [(ngModel)]="address" name="address" required placeholder="Enter Address"></textarea>
+        </div>
+  
+        <button type="submit" class="btn custom-btn w-100 py-3 fw-bold">
+          {{ isLoginMode ? 'Login' : 'Signup' }}
+        </button>
+      </form>
+  
+      <div class="text-center mt-3">
+        <small class="text-white">
+          {{ isLoginMode ? 'New user?' : 'Already have an account?' }}
+        </small>
         <button type="button" class="btn btn-link fw-bold p-0 text-primary" (click)="toggleMode()">
           {{ isLoginMode ? 'Sign Up' : 'Login' }}
         </button>

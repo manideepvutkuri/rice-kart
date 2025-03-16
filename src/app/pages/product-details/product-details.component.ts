@@ -51,33 +51,70 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { AdminRiceService } from '../../services/admin-rice.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-product-details',
+  imports:[CommonModule],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
   product: any;
+  similarProducts: any[] = [];
 
-  constructor(private route: ActivatedRoute, private cartService: CartService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private cartService: CartService, private router: Router, private adminRiceService: AdminRiceService,) {}
 
   ngOnInit() {
-    // Get product details from navigation state
+    // 1️⃣ Try to get product from navigation state
     if (history.state.product) {
       this.product = history.state.product;
+      this.loadSimilarProducts();
     } else {
-      // If user refreshes, redirect them back to home
-      this.router.navigate(['/']);
+      // 2️⃣ If no state, get productId from route and fetch it
+      const productId = this.route.snapshot.paramMap.get('id');
+      if (productId) {
+        this.adminRiceService.getAllRiceVarieties().subscribe(products => {
+          this.product = products.find(p => p.id === productId);
+          if (this.product) {
+            this.loadSimilarProducts(products);
+          } else {
+            this.router.navigate(['/']); // Redirect to home if product not found
+          }
+        });
+      } else {
+        this.router.navigate(['/']); // Redirect if no product ID is found
+      }
     }
+  }
+
+  loadSimilarProducts(products?: any[]) {
+    if (!products) {
+      // Fetch all products if not already loaded
+      this.adminRiceService.getAllRiceVarieties().subscribe(allProducts => {
+        this.filterSimilarProducts(allProducts);
+      });
+    } else {
+      this.filterSimilarProducts(products);
+    }
+  }
+
+  filterSimilarProducts(products: any[]) {
+    this.similarProducts = products.filter(p =>
+      p.id !== this.product.id && p.category === this.product.category
+    );
   }
 
   buyProduct(product: any) {
     this.cartService.addToCart(product);
-    this.router.navigate(['/cart']);
+    alert(`${product.name} added to cart!`);
+    // this.router.navigate(['/cart']);
   }
 
   goBack() {
     this.router.navigate(['/']);
   }
+  
 }

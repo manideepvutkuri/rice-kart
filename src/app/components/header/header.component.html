@@ -22,12 +22,12 @@
     </div>
     <nav>
         <button (click)="navigateToHome()">Home</button>
-        <a routerLink="/cart">Cart ({{ cartCount }})</a>
+        
         <button *ngIf="authService.user$ | async" routerLink="/order-history" (click)="navigateToOrderHistory()" routerLinkActive="active">Order History</button>
     </nav>
     <button *ngIf="isAdmin$ | async" (click)="adminProd()">Add productd by Admin</button> 
     <button *ngIf="isAdmin$ | async" (click)="gotoadmin()">Admin Panel</button>  
-
+    <button (click)="cart()">Cart ({{ cartCount }})</button>
     <button *ngIf="(authService.user$ | async) as user" (click)="logout()">
         Logout ({{ user.email }})
     </button>

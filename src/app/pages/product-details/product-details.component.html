@@ -1,48 +1,4 @@
-<!-- <div *ngIf="product">
-    <h1>{{ product.name }}</h1>
-    <p>Price: ₹{{ product.price }}</p>
-    <img [src]="product.image" alt="{{ product.name }}" width="150">
-    
-    <button (click)="buyProduct(product)">Buy Now</button>
-    <button (click)="goBack()">Back</button>
-  </div>
-   -->
-
-   <!-- <div class="product-details">
-    <div class="product-image">
-      <img [src]="product.image" alt="{{ product.name }}">
-    </div>
-    <div class="product-info">
-      <h1>{{ product.name }}</h1>
-      <p class="price">Price: ₹{{ product.price }}</p>
-      <p class="description">{{ product.description }}</p>
-      
-      <div class="actions">
-        <button (click)="buyProduct(product)" class="buy-btn">Buy Now</button>
-        <button (click)="goBack()" class="back-btn">Back</button>
-      </div>
-    </div>
-  </div> -->
-
-  
-  <!-- <div class="product-details-container">
-    <div class="product-image">
-      <img [src]="product.image" alt="{{ product.name }}">
-    </div>
-    
-    <div class="product-info">
-      <h2>{{ product.name }}</h2>
-      <p class="product-description">{{ product.description }}</p>
-      <p class="product-price">Price: ₹{{ product.price }}</p>
-  
-      <div class="product-actions">
-        <button (click)="buyProduct(product)" class="buy-button">Buy Now</button>
-        <button (click)="goBack()" class="back-button">Back</button>
-      </div>
-    </div>
-  </div> -->
-  
-  <div class="container mt-4">
+  <!-- <div class="container mt-4">
     <div class="card">
       <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.name }}">
       <div class="card-body">
@@ -53,6 +9,45 @@
       </div>
     </div>
   </div>
+
+
+  <div class="similar-products mt-4">
+    <h3>Similar Products</h3>
+    <div class="product-list">
+      <div *ngFor="let similarProduct of similarProducts" class="product-card">
+        <img [src]="similarProduct.imageUrl" alt="{{ similarProduct.name }}" class="small-image">
+        <h5>{{ similarProduct.name }}</h5>
+        <p>₹{{ similarProduct.price }}</p>
+        <button (click)="buyProduct(similarProduct)" class="btn btn-success">Add to Cart</button>
+      </div>
+    </div>
+  </div> -->
+
   
   
+  <div class="container mt-4">
+    <!-- Selected Product Details -->
+    <div class="card p-3 shadow-lg">
+      <img [src]="product?.imageUrl" class="product-img" alt="{{ product?.name }}">
+      <h2 class="mt-2">{{ product?.name }}</h2>
+      <p class="text-muted">Price: ₹{{ product?.price }}</p>
+      <p>{{ product?.description }}</p>
+      <button (click)="buyProduct(product)" class="btn btn-primary w-100">Add to Cart</button>
+    </div>
+  
+    <!-- Similar Products -->
+    <h3 class="mt-5">Similar Products</h3>
+    <div class="row">
+      <div *ngFor="let similarProduct of similarProducts" class="col-md-3">
+        <div class="card p-2 shadow-sm">
+          <img [src]="similarProduct.imageUrl" class="product-img" alt="{{ similarProduct.name }}">
+          <div class="card-body text-center">
+            <h5>{{ similarProduct.name }}</h5>
+            <p class="text-muted">₹{{ similarProduct.price }}</p>
+            <button (click)="buyProduct(similarProduct)" class="btn btn-success btn-sm w-100">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   
