@@ -65,9 +65,24 @@ export class AuthComponent {
   confirmPassword = '';
   address = '';
   isLoginMode = true; // Toggle between login & signup
+  emailNotVerified = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  async onForgotPassword() {
+    if (!this.email) {
+      alert('Please enter your email first.');
+      return;
+    }
+
+    try {
+      const message = await this.authService.resetPassword(this.email);
+      alert(message); // Show success message
+    } catch (error) {
+      alert('Error sending reset link. Try again.');
+    }
+  }
+  
   async onSubmit() {
     try {
       if (this.isLoginMode) {
@@ -88,7 +103,9 @@ export class AuthComponent {
 
         // Signup
         await this.authService.signUp(this.name, this.email, this.password, this.address);
-        alert('Signup Successful! Please log in.');
+        // alert('Signup Successful! Please log in.');
+        alert('Signup Successful! A verification email has been sent.');
+        this.emailNotVerified = true;
         this.toggleMode(); // Switch to login mode
       }
     } catch (error: unknown) {
@@ -101,9 +118,13 @@ export class AuthComponent {
     }
   }
 
+  async resendEmailVerification() {
+    await this.authService.resendVerificationEmail();
+  }
+
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
-    // Clear fields when toggling
+    this.emailNotVerified = false; // Reset email verification state
     this.name = '';
     this.email = '';
     this.password = '';

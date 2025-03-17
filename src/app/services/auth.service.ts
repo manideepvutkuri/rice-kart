@@ -141,7 +141,7 @@
 // }
 
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth,sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
@@ -166,12 +166,24 @@ export class AuthService {
       }
     });
   }
-
+  async resetPassword(email: string) {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      return 'Reset link sent! Check your email.';
+    } catch (error) {
+      console.error('Reset Password Error:', error);
+      throw error;
+    }
+  }
   // 🔹 Signup: Store user data in Firestore
   async signUp(name: string, email: string, password: string, address: string, role: string = 'user') {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       const user = userCredential.user;
+
+        // Send email verification
+        await sendEmailVerification(user);
+        alert('Verification email sent. Please check your inbox.');
 
       // Save user details in Firestore
       await setDoc(doc(this.firestore, 'users', user.uid), { name, email, address, role });
@@ -188,6 +200,11 @@ export class AuthService {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       const userData = await this.getUserRole(userCredential.user.uid);
+      const user = userCredential.user;
+
+      if (!user.emailVerified) {
+        throw new Error('Please verify your email before logging in.');
+      }
 
       localStorage.setItem('user', JSON.stringify(userData));
       this.userSubject.next(userData);
@@ -198,6 +215,13 @@ export class AuthService {
     }
   }
 
+  async resendVerificationEmail() {
+    const user = this.auth.currentUser;
+    if (user && !user.emailVerified) {
+      await sendEmailVerification(user);
+      alert('Verification email resent. Please check your inbox.');
+    }
+  }
   // 🔹 Logout
   async logout() {
     await signOut(this.auth);

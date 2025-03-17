@@ -64,6 +64,7 @@ import { CommonModule } from '@angular/common';
 export class ProductDetailsComponent implements OnInit {
   product: any;
   similarProducts: any[] = [];
+  cartItemQuantity: number = 0;
 
   constructor(private route: ActivatedRoute, private cartService: CartService, private router: Router, private adminRiceService: AdminRiceService,) {}
 
@@ -72,6 +73,7 @@ export class ProductDetailsComponent implements OnInit {
     if (history.state.product) {
       this.product = history.state.product;
       this.loadSimilarProducts();
+      this.checkCart();
     } else {
       // 2️⃣ If no state, get productId from route and fetch it
       const productId = this.route.snapshot.paramMap.get('id');
@@ -86,6 +88,48 @@ export class ProductDetailsComponent implements OnInit {
         });
       } else {
         this.router.navigate(['/']); // Redirect if no product ID is found
+      }
+    }
+  }
+  checkCart() {
+    this.cartService.getCartItems().subscribe(cart => {
+      const item = cart.find((p: any) => p.id === this.product.id);
+      this.cartItemQuantity = item ? item.quantity : 0;
+    });
+  }
+  getCartQuantity(product: any): number {
+    let quantity = 0;
+    this.cartService.getCartItems().subscribe(cart => {
+      const item = cart.find(p => p.id === product.id);
+      quantity = item ? item.quantity : 0;
+    });
+    return quantity;
+  }
+  increaseQuantity(product?: any) {
+    if (product) {
+      let quantity = this.getCartQuantity(product) + 1;
+      this.cartService.addToCart({ ...product, quantity });
+    } else {
+      this.cartItemQuantity++;
+      this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
+    }
+  }
+
+  decreaseQuantity(product?: any) {
+    if (product) {
+      let quantity = this.getCartQuantity(product);
+      if (quantity > 1) {
+        this.cartService.addToCart({ ...product, quantity: quantity - 1 });
+      } else {
+        this.cartService.removeFromCart(product.id);
+      }
+    } else {
+      if (this.cartItemQuantity > 1) {
+        this.cartItemQuantity--;
+        this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
+      } else {
+        this.cartService.removeFromCart(this.product.id);
+        this.cartItemQuantity = 0;
       }
     }
   }

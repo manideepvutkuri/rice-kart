@@ -25,8 +25,8 @@
 
   
   
-  <div class="container mt-4">
-    <!-- Selected Product Details -->
+  <!-- <div class="container mt-4">
+    
     <div class="card p-3 shadow-lg">
       <img [src]="product?.imageUrl" class="product-img" alt="{{ product?.name }}">
       <h2 class="mt-2">{{ product?.name }}</h2>
@@ -35,7 +35,7 @@
       <button (click)="buyProduct(product)" class="btn btn-primary w-100">Add to Cart</button>
     </div>
   
-    <!-- Similar Products -->
+    
     <h3 class="mt-5">Similar Products</h3>
     <div class="row">
       <div *ngFor="let similarProduct of similarProducts" class="col-md-3">
@@ -45,6 +45,57 @@
             <h5>{{ similarProduct.name }}</h5>
             <p class="text-muted">₹{{ similarProduct.price }}</p>
             <button (click)="buyProduct(similarProduct)" class="btn btn-success btn-sm w-100">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   -->
+
+   <div class="container mt-4">
+    <!-- Selected Product Details -->
+    <div class="card p-3 shadow-lg text-center">
+      <img [src]="product?.imageUrl" class="product-img mx-auto" alt="{{ product?.name }}">
+      <h2 class="mt-2">{{ product?.name }}</h2>
+      <p class="text-muted fs-5">Price: ₹{{ product?.price }}</p>
+      <p class="px-3">{{ product?.description }}</p>
+  
+      <!-- Add to Cart / Quantity Controls -->
+      <div *ngIf="cartItemQuantity === 0; else quantityControls">
+        <button (click)="increaseQuantity()" class="btn btn-primary w-100">Add to Cart</button>
+      </div>
+  
+      <ng-template #quantityControls>
+        <div class="d-flex justify-content-center align-items-center">
+          <button (click)="decreaseQuantity()" class="btn btn-danger btn-sm">−</button>
+          <span class="px-3">{{ cartItemQuantity }}</span>
+          <button (click)="increaseQuantity()" class="btn btn-success btn-sm">+</button>
+        </div>
+      </ng-template>
+    </div>
+  
+    <!-- Similar Products -->
+    <h3 class="mt-5">Similar Products</h3>
+    <div class="row">
+      <div *ngFor="let similarProduct of similarProducts" class="col-md-3">
+        <div class="card p-2 shadow-sm text-center">
+          <img [src]="similarProduct.imageUrl" class="product-img mx-auto" alt="{{ similarProduct.name }}">
+          <div class="card-body">
+            <h5>{{ similarProduct.name }}</h5>
+            <p class="text-muted">₹{{ similarProduct.price }}</p>
+  
+            
+            <div *ngIf="getCartQuantity(similarProduct) === 0; else similarQuantityControls">
+              <button (click)="increaseQuantity(similarProduct)" class="btn btn-success btn-sm w-100">Add to Cart</button>
+            </div>
+  
+            <ng-template #similarQuantityControls>
+              <div class="d-flex justify-content-center align-items-center">
+                <button (click)="decreaseQuantity(similarProduct)" class="btn btn-danger btn-sm">−</button>
+                <span class="px-3">{{ getCartQuantity(similarProduct) }}</span>
+                <button (click)="increaseQuantity(similarProduct)" class="btn btn-success btn-sm">+</button>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
