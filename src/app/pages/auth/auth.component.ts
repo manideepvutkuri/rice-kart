@@ -66,6 +66,8 @@ export class AuthComponent {
   address = '';
   isLoginMode = true; // Toggle between login & signup
   emailNotVerified = false;
+  mobile = '';
+confirmMobile = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -82,7 +84,7 @@ export class AuthComponent {
       alert('Error sending reset link. Try again.');
     }
   }
-  
+
   async onSubmit() {
     try {
       if (this.isLoginMode) {
@@ -92,8 +94,12 @@ export class AuthComponent {
         this.router.navigate(['/']);
       } else {
         // Signup validation
-        if (!this.name || !this.address || !this.confirmPassword) {
+        if (!this.name || !this.address || !this.confirmPassword || !this.mobile || !this.confirmMobile) {
           alert('All fields are required for Signup!');
+          return;
+        }
+        if (this.mobile !== this.confirmMobile) {
+          alert('Mobile numbers do not match!');
           return;
         }
         if (this.password !== this.confirmPassword) {
@@ -102,7 +108,7 @@ export class AuthComponent {
         }
 
         // Signup
-        await this.authService.signUp(this.name, this.email, this.password, this.address);
+        await this.authService.signUp(this.name, this.email, this.password, this.address, this.mobile);
         // alert('Signup Successful! Please log in.');
         alert('Signup Successful! A verification email has been sent.');
         this.emailNotVerified = true;

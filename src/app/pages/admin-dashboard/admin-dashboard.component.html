@@ -9,6 +9,7 @@
           <th>Order ID</th>
           <th>User Email</th>
           <th>Items</th>
+          <th>Mobile Number</th>
           <th>Total Price</th>
           <th>Status</th>
         </tr>
@@ -22,6 +23,7 @@
               <li *ngFor="let item of order.items">{{ item.name }} - ₹{{ item.price }}</li>
             </ul>
           </td>
+          <td>{{ order.mobile || 'N/A' }}</td>
           <td><strong>₹{{ order.totalAmount }}</strong></td>
           <td>
             <select class="form-select"

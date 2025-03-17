@@ -176,7 +176,7 @@ export class AuthService {
     }
   }
   // 🔹 Signup: Store user data in Firestore
-  async signUp(name: string, email: string, password: string, address: string, role: string = 'user') {
+  async signUp(name: string, email: string, password: string, address: string,mobile: string, role: string = 'user') {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       const user = userCredential.user;
@@ -186,7 +186,7 @@ export class AuthService {
         alert('Verification email sent. Please check your inbox.');
 
       // Save user details in Firestore
-      await setDoc(doc(this.firestore, 'users', user.uid), { name, email, address, role });
+      await setDoc(doc(this.firestore, 'users', user.uid), { name, email, address, mobile, role });
 
       return user;
     } catch (error) {
@@ -231,7 +231,7 @@ export class AuthService {
   }
 
   // 🔹 Fetch user data from Firestore (checks both `admins` and `users` collections)
-  private async getUserRole(uid: string): Promise<{ uid: string; email: string | null; role: string; name?: string; address?: string }> {
+  private async getUserRole(uid: string): Promise<{ uid: string; email: string | null; role: string; name?: string; address?: string, mobile?: string; }> {
     // Check `admins` collection first
     let userDocRef = doc(this.firestore, 'admins', uid);
     let userDoc = await getDoc(userDocRef);
@@ -239,7 +239,7 @@ export class AuthService {
     if (userDoc.exists()) {
       const userData = userDoc.data();
       console.log('Admin found:', userData);
-      return { uid, email: userData['email'] || null, role: 'admin', name: userData['name'], address: userData['address'] };
+      return { uid, email: userData['email'] || null, role: 'admin', name: userData['name'], address: userData['address'], mobile: userData['mobile'] || null };
     }
 
     // If not an admin, check `users` collection
@@ -249,7 +249,7 @@ export class AuthService {
     if (userDoc.exists()) {
       const userData = userDoc.data();
       console.log('User found:', userData);
-      return { uid, email: userData['email'] || null, role: 'user', name: userData['name'], address: userData['address'] };
+      return { uid, email: userData['email'] || null, role: 'user', name: userData['name'], address: userData['address'], mobile: userData['mobile'] || null };
     }
 
     console.warn(`No user document found for UID: ${uid}`);
@@ -257,7 +257,7 @@ export class AuthService {
   }
 
   // 🔹 Get Current User as an Observable
-  getCurrentUser(): Observable<{ uid: string; email: string | null; role: string; name?: string; address?: string } | null> {
+  getCurrentUser(): Observable<{mobile?:string, uid: string; email: string | null; role: string; name?: string; address?: string } | null> {
     return this.user$;
   }
 }

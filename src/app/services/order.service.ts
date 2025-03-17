@@ -26,6 +26,7 @@ export class OrderService {
         ...orderData,
         userId: currentUser.uid, // ✅ Attach user ID
         userEmail: currentUser.email,
+        mobile: currentUser.mobile
       };
 
       const orderRef = collection(this.firestore, 'orders');
