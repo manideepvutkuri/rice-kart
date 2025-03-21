@@ -65,6 +65,7 @@ export class ProductDetailsComponent implements OnInit {
   product: any;
   similarProducts: any[] = [];
   cartItemQuantity: number = 0;
+  cartTotalItems: number = 0;
 
   constructor(private route: ActivatedRoute, private cartService: CartService, private router: Router, private adminRiceService: AdminRiceService,) {}
 
@@ -160,5 +161,7 @@ export class ProductDetailsComponent implements OnInit {
   goBack() {
     this.router.navigate(['/']);
   }
-  
+  navigateToCart() {
+    this.router.navigate(['/cart']);
+  }
 }

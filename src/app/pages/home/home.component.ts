@@ -57,4 +57,5 @@ export class HomeComponent {
   viewDetails(rice: RiceVariety) {
     this.router.navigate(['/product', rice.id], { state: { product: rice } });
   }
+  exploreProducts(){}
 }

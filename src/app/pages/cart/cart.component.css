@@ -1,8 +1,32 @@
-.cart-image {
+/* .cart-image {
     width: 100px;
     height: auto;
     display: block;
     margin: 10px auto;
     border-radius: 5px;
+  } */
+  .card {
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  h2 {
+    color: #007bff;
+    font-weight: 600;
+  }
+  
+  button {
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+  
+  img {
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   }
   

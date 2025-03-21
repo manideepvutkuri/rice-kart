@@ -102,3 +102,7 @@
     </div>
   </div>
   
+
+  <button *ngIf="cartItemQuantity > 0" class="btn btn-primary floating-cart-btn shadow-lg" (click)="navigateToCart()">
+    🛍️ Go to Cart ({{ cartTotalItems }})
+  </button>

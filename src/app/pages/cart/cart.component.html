@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Your Cart</h1>
+    <!-- <h1>Your Cart</h1>
   
     <div *ngIf="cartItems.length > 0; else emptyCart">
       <div class="row" *ngFor="let item of cartItems; let i = index">
@@ -21,6 +21,94 @@
     <button class="btn btn-secondary" (click)="goBack()">Back</button>
     <ng-template #emptyCart>
       <p>Your cart is empty.</p>
-    </ng-template>
+    </ng-template> -->
+    <div class="container my-5">
+      <h2 class="text-center fw-bold text-primary">🛒 Your Cart</h2>
+    
+      <div class="card shadow-lg p-4 border-0 rounded">
+        <div *ngIf="cartItems.length > 0; else emptyCart">
+          <div class="row border-bottom pb-3 mb-3 align-items-center" *ngFor="let item of cartItems; let i = index">
+            
+            <!-- Product Image -->
+            <div class="col-md-3 text-center">
+              <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-fluid rounded shadow" style="max-height: 120px;">
+            </div>
+    
+            <!-- Product Details -->
+            <div class="col-md-6">
+              <h5 class="fw-bold">{{ item.name }}</h5>
+              <p class="text-muted">Price: <span class="fw-bold">₹{{ item.price }}</span></p>
+            </div>
+    
+            <!-- Remove Button -->
+            <div class="col-md-3 text-end">
+              <button class="btn btn-danger btn-sm shadow-sm fw-bold px-3 py-2" (click)="removeItem(i)">
+                ❌ Remove
+              </button>
+            </div>
+    
+          </div>
+    
+          <!-- Total & Buttons -->
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <h4 class="fw-bold">Total: ₹{{ getTotalPrice() }}</h4>
+            <div>
+              <button class="btn btn-warning fw-bold shadow px-4 py-2 me-2" (click)="clearCart()">🧹 Clear Cart</button>
+              <button class="btn btn-success fw-bold shadow px-4 py-2" (click)="placeOrder()">✅ Place Order ₹{{ getTotalPrice() }}</button>
+            </div>
+          </div>
+    
+        </div>
+    
+        <!-- Empty Cart Message -->
+        <ng-template #emptyCart>
+          <div class="text-center my-4">
+            <p class="text-muted">🛒 Your cart is empty.</p>
+          </div>
+        </ng-template>
+      </div>
+    
+      <!-- Back Button -->
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary fw-bold px-4 py-2" (click)="goBack()">⬅️ Back</button>
+      </div>
+    </div>
+    
+    <!-- Payment Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Payment Successful</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Your payment was successful! Your order has been placed.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="closeSuccessModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Failure Modal -->
+<div class="modal fade" id="paymentFailureModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Payment Failed</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Payment failed. Please try again.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeFailureModal()">Retry</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   </div>
   

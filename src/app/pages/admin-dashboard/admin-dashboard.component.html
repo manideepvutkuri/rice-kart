@@ -12,6 +12,7 @@
           <th>Mobile Number</th>
           <th>Total Price</th>
           <th>Status</th>
+          <th>paymentStatus</th>
         </tr>
       </thead>
       <tbody>
@@ -35,7 +36,7 @@
               <option value="Cancelled">Cancelled</option>
             </select>
           </td>
-          
+          <td> {{order.paymentStatus || 'N/A'}}</td>
         </tr>
       </tbody>
     </table>
