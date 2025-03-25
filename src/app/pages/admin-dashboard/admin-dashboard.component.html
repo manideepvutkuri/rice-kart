@@ -36,7 +36,13 @@
               <option value="Cancelled">Cancelled</option>
             </select>
           </td>
-          <td> {{order.paymentStatus || 'N/A'}}</td>
+          <!-- <td> {{order.paymentStatus || 'N/A'}}</td> -->
+          <td>
+            <strong>Flat No:</strong> {{ order.deliveryAddress?.flatNo }}<br>
+            <strong>Landmark:</strong> {{ order.deliveryAddress?.landmark }}<br>
+            <strong>Area:</strong> {{ order.deliveryAddress?.area }}<br>
+            <strong>Mobile:</strong> {{ order.userMobile }}
+          </td>
         </tr>
       </tbody>
     </table>

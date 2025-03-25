@@ -65,11 +65,16 @@ export class ProductDetailsComponent implements OnInit {
   product: any;
   similarProducts: any[] = [];
   cartItemQuantity: number = 0;
-  cartTotalItems: number = 0;
+  // cartTotalItems: number = 0;
+  cartCount: number = 0;
 
   constructor(private route: ActivatedRoute, private cartService: CartService, private router: Router, private adminRiceService: AdminRiceService,) {}
 
   ngOnInit() {
+
+    this.cartService.getCartItems().subscribe(items => {
+      this.cartCount = items.length; // Live cart count update
+    });
     // 1️⃣ Try to get product from navigation state
     if (history.state.product) {
       this.product = history.state.product;

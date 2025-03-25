@@ -17,6 +17,7 @@
 </header> -->
 
 <header class="navbar" *ngIf="!isLoginPage()">
+    <i class="fas fa-user-circle profile-icon" (click)="toggleSidebar()">👤</i>
     <div class="logo">
         <a routerLink="/">🍚 Rice Store</a>
     </div>
@@ -28,9 +29,24 @@
     <button *ngIf="isAdmin$ | async" (click)="adminProd()">Add productd by Admin</button> 
     <button *ngIf="isAdmin$ | async" (click)="gotoadmin()">Admin Panel</button>  
     <button (click)="cart()">Cart ({{ cartCount }})</button>
+    
     <button *ngIf="(authService.user$ | async) as user" (click)="logout()">
         Logout ({{ user.email }})
     </button>
     
     <button *ngIf="!(authService.user$ | async)" (click)="navigateToLogin()">Login</button>
 </header>
+<!-- Sidebar Menu -->
+<div class="sidebar" [ngClass]="{'open': isSidebarOpen}">
+    <button class="close-btn" (click)="toggleSidebar()">×</button>
+    <ul>
+        <li><button (click)="navigateTo('/')">🏠 Home</button></li>
+        <li><button (click)="navigateTo('/order-history')">📜 Order History</button></li>
+        <li><button (click)="navigateTo('/account')">👤 My Account</button></li>
+        
+        
+    </ul>
+  </div>
+  
+  <!-- Overlay (to close the menu when clicked outside) -->
+  <div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>

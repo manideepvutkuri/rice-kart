@@ -6,19 +6,28 @@ import { Location } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
 import { firstValueFrom } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 declare var Razorpay: any;
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-cart',
-  imports:[CommonModule],
+  standalone: true, 
+  imports:[CommonModule,FormsModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   totalPrice: number = 0;
+  // Store Address Fields
+  userAddress = {
+    flatNo: '',
+    landmark: '',
+    area: '',
+    mobile: ''
+  };
 
   constructor(private cartService: CartService,private router: Router,private location: Location,private orderService: OrderService,private authService: AuthService) {}
 
@@ -91,6 +100,35 @@ export class CartComponent implements OnInit {
   //     alert("Failed to place order. Please try again.");
   //   }
   // }
+
+
+// ✅ Open Address Modal Before Payment
+openAddressModal() {
+  const modalElement = document.getElementById('addressModal');
+  if (modalElement) {
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
+}
+
+// ✅ Validate & Proceed to Payment
+confirmAddress() {
+  if (!this.userAddress.flatNo || !this.userAddress.landmark || !this.userAddress.area || !this.userAddress.mobile) {
+    alert("Please fill all address fields!");
+    return;
+  }
+  
+  // Close Modal & Proceed to Payment
+  const modalElement = document.getElementById('addressModal');
+  if (modalElement) {
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+  }
+
+  this.placeOrder();
+}
+
+
   async placeOrder() {
     const cartItems = this.cartService.getCartItemsSnapshot();
   
@@ -100,6 +138,19 @@ export class CartComponent implements OnInit {
     }
   
     console.log("Cart Items:", cartItems); // Debugging
+
+    // ✅ Ensure Address Fields Are Filled
+  if (
+    !this.userAddress.flatNo.trim() || 
+    !this.userAddress.landmark.trim() || 
+    !this.userAddress.area.trim() || 
+    !this.userAddress.mobile.trim()
+  ) {
+    alert("Please fill all address fields!");
+    return;
+  }
+
+  console.log("User Address:", this.userAddress);
   
     const totalAmount = cartItems.reduce((sum, item) => {
       const price = item.price || 0;
@@ -155,6 +206,12 @@ export class CartComponent implements OnInit {
       totalAmount: totalAmount,
       userId: user.uid,
       userEmail: user.email,
+      userMobile: this.userAddress.mobile, // ✅ Save user mobile number
+      deliveryAddress: {
+        flatNo: this.userAddress.flatNo,
+        landmark: this.userAddress.landmark,
+        area: this.userAddress.area
+      },
       paymentStatus: "Paid",
       paymentMethod: "Razorpay",
       paymentId: paymentId,

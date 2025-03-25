@@ -15,6 +15,7 @@ import { map, Observable } from 'rxjs';
 export class HeaderComponent implements OnInit {
   cartCount: number = 0;
   isAdmin$!: Observable<boolean>;
+  isSidebarOpen = false;
   constructor(private cartService: CartService,public authService: AuthService,private router: Router) {}
 
   ngOnInit() {
@@ -60,5 +61,15 @@ export class HeaderComponent implements OnInit {
   }
   cart(){
     this.router.navigate(['/cart']);
+  }
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+  // navigateAndClose() {
+  //   this.isSidebarOpen = false;
+  // }
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+    this.isSidebarOpen = false;
   }
 }
