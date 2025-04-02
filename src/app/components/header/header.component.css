@@ -16,7 +16,7 @@
 
 nav a {
     margin: 0 10px;
-    color: #007bff;
+    color: #f1f4f7;
     text-decoration: none;
     font-weight: 500;
 }
@@ -113,4 +113,44 @@ nav a:hover {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Reduced padding for compact look */
+  background-color: #2a2a2a;
+  color: white;
+  font-size: 18px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.cart-button {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  background-color: #f39c12;
+}
+
+.cart-button:hover {
+  background-color: #e67e22;
+}
+
+@media (max-width: 480px) {
+ 
+
+  .header {
+      /* padding: 8px 15px;  */
+      font-size: 16px;
+  }
+
 }

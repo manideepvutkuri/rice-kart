@@ -48,4 +48,10 @@ export class CartService {
   getCartItemCount(): Observable<number> {
     return this.cartSubject.asObservable().pipe(map(items => items.length));
   }
+
+  updateCart(updatedCart: any[]) {
+    localStorage.setItem('cart', JSON.stringify(updatedCart)); // Update localStorage
+  }
+  
+  
 }

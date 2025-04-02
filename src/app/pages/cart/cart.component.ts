@@ -33,15 +33,71 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.cartService.getCartItems().subscribe(items => {
-      this.cartItems = items;
-      this.totalPrice = this.cartService.getTotalPrice();
+      this.cartItems = this.groupCartItems(items);
+      this.totalPrice = this.getTotalPrice();
     });
   }
-  getTotalPrice(): number {
-    return this.cartItems.reduce((sum, item) => sum + item.price, 0);
+
+  // ✅ Merge duplicate items by grouping them
+  groupCartItems(items: any[]): any[] {
+    const groupedItems: { [key: string]: any } = {};
+
+    items.forEach(item => {
+      if (groupedItems[item.id]) {
+        groupedItems[item.id].quantity += 1;
+      } else {
+        groupedItems[item.id] = { ...item, quantity: 1 };
+      }
+    });
+
+    return Object.values(groupedItems);
   }
+
+  // ✅ Calculate total price correctly based on quantity
+  getTotalPrice(): number {
+    return this.cartItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  }
+
+  // ✅ Remove one quantity of an item
+  // removeItem(itemId: any) {
+  //   const itemIndex = this.cartItems.findIndex(item => item.id === itemId);
+  //   if (itemIndex !== -1) {
+  //     if (this.cartItems[itemIndex].quantity > 1) {
+  //       this.cartItems[itemIndex].quantity--;
+  //     } else {
+  //       this.cartItems.splice(itemIndex, 1); // Remove item if quantity is 1
+  //     }
+  //   }
+  //   this.totalPrice = this.getTotalPrice();
+  // }
   removeItem(index: number) {
     this.cartService.removeFromCart(index);
+  }
+  
+  // removeItem(itemId: any) {
+  //   console.log("Removing item with ID:", itemId);
+  //   const itemIndex = this.cartItems.findIndex(item => item.id === itemId);
+  //   if (itemIndex !== -1) {
+  //     console.log("Item found at index:", itemIndex);
+  //     if (this.cartItems[itemIndex].quantity > 1) {
+  //       this.cartItems[itemIndex].quantity--;
+  //     } else {
+  //       console.log("Item not found!");
+  //       this.cartItems.splice(itemIndex, 1); // Remove item if quantity is 1
+  //     }
+      
+  //     // ✅ Update the cart in Firestore or Local Storage
+  //     // this.cartService.updateCart(this.cartItems);
+  //   }
+  
+  //   // ✅ Refresh the total price after item removal
+  //   this.totalPrice = this.getTotalPrice();
+  // }
+  
+  updateQuantity(index: number, change: number) {
+    if (this.cartItems[index].quantity + change > 0) {
+      this.cartItems[index].quantity += change;
+    }
   }
   
   clearCart() {
@@ -152,12 +208,14 @@ confirmAddress() {
 
   console.log("User Address:", this.userAddress);
   
-    const totalAmount = cartItems.reduce((sum, item) => {
-      const price = item.price || 0;
-      const quantity = item.quantity || 1;
-      return sum + price * quantity;
-    }, 0);
+  const totalAmount = cartItems.reduce((sum, item) => {
+    const price = item.price || 0;
+    const quantity = item.quantity || 1;
+    console.log(`Item: ${item.name}, Price: ${price}, Quantity: ${quantity}, Subtotal: ${price * quantity}`);
+    return sum + item.price;
+  }, 0);
   
+  // return this.cartItems.reduce((sum, item) => sum + item.price, 0);
     console.log("Calculated Total Amount:", totalAmount); // Debugging
   
     const user = await firstValueFrom(this.authService.getCurrentUser());// Await user retrieval
@@ -194,7 +252,7 @@ confirmAddress() {
         }
       }
     };
-  
+    console.log("Initializing Razorpay with amount:", totalAmount);
     const rzp = new Razorpay(options);
     rzp.open();
   }

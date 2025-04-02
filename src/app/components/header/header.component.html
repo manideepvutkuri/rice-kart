@@ -16,7 +16,7 @@
 
 </header> -->
 
-<header class="navbar" *ngIf="!isLoginPage()">
+<!-- <header class="navbar" *ngIf="!isLoginPage()">
     <i class="fas fa-user-circle profile-icon" (click)="toggleSidebar()">👤</i>
     <div class="logo">
         <a routerLink="/">🍚 Rice Store</a>
@@ -35,7 +35,23 @@
     </button>
     
     <button *ngIf="!(authService.user$ | async)" (click)="navigateToLogin()">Login</button>
-</header>
+</header> -->
+
+<header class="header" *ngIf="!isLoginPage()">
+    <div class="logo">🍚 Rice Store</div>
+    <nav>
+        
+      <a  class="cart-button" (click)="cart()">
+        🛒 Cart ({{ cartCount }})
+      </a>
+    </nav>
+    <!-- <button *ngIf="(authService.user$ | async) as user" (click)="logout()">
+        <i class="material-icons">logout</i>
+    </button> -->
+    <i class="material-icons" (click)="logout()">logout</i>
+  </header>
+
+
 <!-- Sidebar Menu -->
 <div class="sidebar" [ngClass]="{'open': isSidebarOpen}">
     <button class="close-btn" (click)="toggleSidebar()">×</button>

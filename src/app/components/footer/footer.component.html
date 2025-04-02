@@ -1,1 +1,24 @@
-<footer>Footer</footer>
+<div class="bottom-nav"   *ngIf="!isLoginPage()">
+    <button class="nav-btn" (click)="navigateTo('/home')" routerLinkActive="active">
+      <div class="icon-container">
+        <i class="fas fa-home"></i>
+      </div>
+      <span>Home</span>
+    </button>
+  
+    <button class="nav-btn" (click)="navigateTo('/order-history')" routerLinkActive="active">
+      <div class="icon-container">
+        <i class="fas fa-box"></i>
+      </div>
+      <span>Orders</span>
+    </button>
+  
+    <button class="nav-btn cart-btn" (click)="navigateTo('/cart')" routerLinkActive="active">
+      <div class="icon-container">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </div>
+      <span>Cart</span>
+    </button>
+  </div>
+  

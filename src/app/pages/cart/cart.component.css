@@ -5,28 +5,101 @@
     margin: 10px auto;
     border-radius: 5px;
   } */
-  .card {
-    border-radius: 16px;
-    background: #ffffff;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  /* Cart Container */
+/* Cart Container */
+.cart-container {
+  border-radius: 15px;
+  padding: 20px;
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart Item */
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Product Image (Left Side) */
+.cart-image img {
+  width: 80px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart Content (Right Side) */
+.cart-content {
+  flex: 1;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header (Name & Remove Button) */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Remove Button */
+.btn-danger {
+  background: linear-gradient(135deg, #ff4b5c, #ff6b81);
+  border: none;
+  padding: 5px 8px;
+  font-size: 14px;
+}
+
+/* Price Text */
+p.text-muted {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* Cart Footer */
+.cart-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Buttons */
+.cart-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-buttons button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-direction: row;
+    text-align: left;
   }
-  
-  h2 {
-    color: #007bff;
-    font-weight: 600;
-  }
-  
-  button {
-    transition: all 0.3s ease-in-out;
-    border-radius: 8px;
-  }
-  
-  button:hover {
-    transform: scale(1.05);
-  }
-  
-  img {
-    border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-  }
-  
+}
+
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.cart-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+}
+.cart-footer {
+  text-align: center;
+  margin-top: 20px;
+}

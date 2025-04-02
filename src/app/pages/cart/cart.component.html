@@ -25,36 +25,39 @@
     <div class="container my-5">
       <h2 class="text-center fw-bold text-primary">🛒 Your Cart</h2>
     
-      <div class="card shadow-lg p-4 border-0 rounded">
+      <div class="card cart-container">
         <div *ngIf="cartItems.length > 0; else emptyCart">
-          <div class="row border-bottom pb-3 mb-3 align-items-center" *ngFor="let item of cartItems; let i = index">
+          <div class="cart-item" *ngFor="let item of cartItems; let i = index">
             
-            <!-- Product Image -->
-            <div class="col-md-3 text-center">
-              <img [src]="item.imageUrl" alt="{{ item.name }}" class="img-fluid rounded shadow" style="max-height: 120px;">
+            <!-- Product Image on the Left -->
+            <div class="cart-image">
+              <img [src]="item.imageUrl" alt="{{ item.name }}">
             </div>
     
-            <!-- Product Details -->
-            <div class="col-md-6">
-              <h5 class="fw-bold">{{ item.name }}</h5>
+            <!-- Product Details & Remove Button on the Right -->
+            <div class="cart-content">
+              <div class="cart-header">
+                <h5 class="fw-bold">{{ item.name }}</h5>
+                <button class="btn btn-danger btn-sm fw-bold" (click)="removeItem(item.id)">
+                  ❌
+                </button>
+              </div>
               <p class="text-muted">Price: <span class="fw-bold">₹{{ item.price }}</span></p>
-            </div>
-    
-            <!-- Remove Button -->
-            <div class="col-md-3 text-end">
-              <button class="btn btn-danger btn-sm shadow-sm fw-bold px-3 py-2" (click)="removeItem(i)">
-                ❌ Remove
-              </button>
+              <div class="quantity-controls">
+                <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(i, -1)">➖</button>
+                <span class="fw-bold mx-2">{{ item.quantity }}</span>
+                <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(i, 1)">➕</button>
+              </div>
             </div>
     
           </div>
     
           <!-- Total & Buttons -->
-          <div class="d-flex justify-content-between align-items-center mt-3">
+          <div class="cart-footer">
             <h4 class="fw-bold">Total: ₹{{ getTotalPrice() }}</h4>
-            <div>
-              <button class="btn btn-warning fw-bold shadow px-4 py-2 me-2" (click)="clearCart()">🧹 Clear Cart</button>
-              <button class="btn btn-success fw-bold shadow px-4 py-2" (click)="openAddressModal()">✅ Place Order ₹{{ getTotalPrice() }}</button>
+            <div class="cart-buttons">
+              <button class="btn btn-warning fw-bold" (click)="clearCart()">🧹 Clear Cart</button>
+              <button class="btn btn-success fw-bold" (click)="openAddressModal()">✅ Place Order ₹{{ getTotalPrice() }}</button>
             </div>
           </div>
     
@@ -70,9 +73,11 @@
     
       <!-- Back Button -->
       <div class="text-center mt-3">
-        <button class="btn btn-secondary fw-bold px-4 py-2" (click)="goBack()">⬅️ Back</button>
+        <button class="btn btn-secondary fw-bold" (click)="goBack()">⬅️ Back</button>
       </div>
     </div>
+    
+    
     <!-- Address Modal -->
 <!-- Address Collection Modal -->
 <div class="modal fade" id="addressModal" tabindex="-1" aria-hidden="true">

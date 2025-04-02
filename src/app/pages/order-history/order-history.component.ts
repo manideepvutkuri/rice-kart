@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./order-history.component.css']
 })
 export class OrderHistoryComponent implements OnInit {
+  
   orders: any[] = [];
 
   constructor(private orderService: OrderService, private authService: AuthService) {}
