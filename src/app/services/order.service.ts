@@ -37,11 +37,17 @@ export class OrderService {
       throw error;
     }
   }
+  // getOrders(): Observable<any[]> {
+  //   const orderRef = collection(this.firestore, 'orders'); // Reference to 'orders' collection
+  //   return collectionData(orderRef, { idField: 'id' }); // Fetch orders with document IDs
+  // }
   getOrders(): Observable<any[]> {
-    const orderRef = collection(this.firestore, 'orders'); // Reference to 'orders' collection
-    return collectionData(orderRef, { idField: 'id' }); // Fetch orders with document IDs
+    const orderRef = collection(this.firestore, 'orders');
+    const orderedQuery = query(orderRef, orderBy("createdAt", "desc")); // Sort by latest orders
+  
+    return collectionData(orderedQuery, { idField: 'id' });
   }
- 
+  
 
   getUserOrders(userId: string): Observable<any[]> {
     return new Observable(observer => {

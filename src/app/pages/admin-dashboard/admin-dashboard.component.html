@@ -12,7 +12,8 @@
           <th>Mobile Number</th>
           <th>Total Price</th>
           <th>Status</th>
-          <th>paymentStatus</th>
+          <th>Address</th>
+          <th>Time</th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +44,7 @@
             <strong>Area:</strong> {{ order.deliveryAddress?.area }}<br>
             <strong>Mobile:</strong> {{ order.userMobile }}
           </td>
+          <td> {{ order.createdAt?.seconds ? (order.createdAt.seconds * 1000 | date:'MMM d, y h:mm a') : 'N/A' }}</td>
         </tr>
       </tbody>
     </table>

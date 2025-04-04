@@ -27,15 +27,30 @@ export class OrderHistoryComponent implements OnInit {
     });
   }
   
+  // fetchOrders(userId: string) {
+  //   this.orderService.getUserOrders(userId).subscribe(orders => {
+  //     console.log("Order history fetched:", JSON.stringify(orders, null, 2)); // ✅ Debugging
+  //     this.orders = orders;
+  //   }, error => {
+  //     console.error("Error fetching orders:", error);
+  //   });
+  // }
+  
   fetchOrders(userId: string) {
     this.orderService.getUserOrders(userId).subscribe(orders => {
       console.log("Order history fetched:", JSON.stringify(orders, null, 2)); // ✅ Debugging
-      this.orders = orders;
+  
+      // Ensure orders are sorted by createdAt (latest first)
+      this.orders = orders.sort((a, b) => {
+        return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
+      });
+  
     }, error => {
       console.error("Error fetching orders:", error);
     });
   }
   
+
   getUniqueItems(orderItems: any[]): any[] {
     const itemMap = new Map();
     orderItems.forEach(item => {
