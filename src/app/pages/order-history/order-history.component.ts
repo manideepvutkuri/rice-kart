@@ -36,5 +36,17 @@ export class OrderHistoryComponent implements OnInit {
     });
   }
   
+  getUniqueItems(orderItems: any[]): any[] {
+    const itemMap = new Map();
+    orderItems.forEach(item => {
+      if (itemMap.has(item.name)) {
+        itemMap.get(item.name).quantity += 1; // Increment quantity
+      } else {
+        itemMap.set(item.name, { ...item, quantity: 1 });
+      }
+    });
+    return Array.from(itemMap.values());
+  }
+  
   
 }

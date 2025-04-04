@@ -110,7 +110,7 @@
   .cart-badge {
     position: absolute;
     top: -5px;
-    right: -5px;
+    right: -2px;
     background-color: red;
     color: white;
     font-size: 12px;
@@ -119,3 +119,6 @@
     border-radius: 50%;
   }
   
+  .content-wrapper {
+    padding-bottom: 50px; /* Pushes content up so footer doesn’t overlap */
+}

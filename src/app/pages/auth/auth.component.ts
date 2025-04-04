@@ -68,6 +68,7 @@ export class AuthComponent {
   emailNotVerified = false;
   mobile = '';
 confirmMobile = '';
+  isLoading: boolean | undefined;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -86,11 +87,12 @@ confirmMobile = '';
   }
 
   async onSubmit() {
+    this.isLoading = true; // Show loader
     try {
       if (this.isLoginMode) {
         // Login
         await this.authService.login(this.email, this.password);
-        alert('Login Successful!');
+        // alert('Login Successful!');
         this.router.navigate(['/']);
       } else {
         // Signup validation
@@ -121,6 +123,8 @@ confirmMobile = '';
         alert('An unknown error occurred');
         console.error(error);
       }
+    }finally {
+      this.isLoading = false; // Hide loader
     }
   }
 
@@ -137,4 +141,16 @@ confirmMobile = '';
     this.confirmPassword = '';
     this.address = '';
   }
+  login() {
+    this.isLoading = true; // Show loader
+  
+    this.authService.login(this.email, this.password).then(() => {
+      this.isLoading = false; // Hide loader before navigating
+      this.router.navigate(['/home']);
+    }).catch(error => {
+      this.isLoading = false; // Hide loader on error
+      console.error('Login failed:', error);
+    });
+  }
+  
 }
