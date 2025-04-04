@@ -38,6 +38,7 @@
 </header> -->
 
 <header class="header" *ngIf="!isLoginPage()">
+    <i class="fas fa-user-circle profile-icon" (click)="toggleSidebar()"></i>
     <div class="logo">🍚 fyben</div>
     <!-- <nav>
         
@@ -58,7 +59,10 @@
     <ul>
         <li><button (click)="navigateTo('/')">🏠 Home</button></li>
         <li><button (click)="navigateTo('/order-history')">📜 Order History</button></li>
-        <li><button (click)="navigateTo('/account')">👤 My Account</button></li>
+        <li><button (click)="navigateTo('/about-us')">ℹ️ About Us</button></li>
+        <li><button (click)="navigateTo('/help-support')">❓ Help & Support</button></li>
+        <li><button (click)="navigateTo('/terms-conditions')">📜 Terms & Conditions</button></li>
+        <li><button (click)="navigateTo('/privacy-policy')">🔒 Privacy Policy</button></li>
         
         
     </ul>

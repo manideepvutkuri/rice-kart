@@ -50,9 +50,9 @@ nav a:hover {
 }
 
 .profile-icon {
-  font-size: 1.8rem;
+  font-size: 24px;
   cursor: pointer;
-  color: #333;
+  /* color: #333; */
 }
 
 /* Sidebar */
@@ -129,7 +129,7 @@ nav a:hover {
 
 .logo {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 28px;
 }
 
 .cart-button {

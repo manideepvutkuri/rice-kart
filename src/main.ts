@@ -21,6 +21,10 @@ import { AdminGuard } from './app/guards/admin.guard';
 import { OrderHistoryComponent } from './app/pages/order-history/order-history.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminRiceComponent } from './app/pages/admin-rice/admin-rice.component';
+import { AboutUsComponent } from './app/pages/about-us/about-us.component';
+import { HelpSupportComponent } from './app/pages/help-support/help-support.component';
+import { TermsConditionsComponent } from './app/pages/terms-conditions/terms-conditions.component';
+import { PrivacyPolicyComponent } from './app/pages/privacy-policy/privacy-policy.component';
 
 // ✅ Firebase configuration (replace with your own Firebase keys)
 const firebaseConfig = {
@@ -41,6 +45,10 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'order-history', component: OrderHistoryComponent },
   { path: 'admin-rice', component: AdminRiceComponent },
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'help-support', component: HelpSupportComponent },
+  { path: 'terms-conditions', component: TermsConditionsComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: '**', redirectTo: '' }
 ];
 

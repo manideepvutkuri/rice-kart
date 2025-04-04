@@ -87,23 +87,30 @@
         <h5 class="modal-title">Enter Your Address</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
+      <div class="alert alert-danger" *ngIf="showErrorMsg">
+        Please fill in all the address fields!
+      </div>
       <div class="modal-body">
         <form>
           <div class="mb-3">
             <label class="form-label">Flat/House No.</label>
             <input type="text" class="form-control" [(ngModel)]="userAddress.flatNo" name="flatNo" required>
+            <small class="text-danger" *ngIf="!userAddress.flatNo && showErrorMsg">This field is required.</small>
           </div>
           <div class="mb-3">
             <label class="form-label">Landmark</label>
             <input type="text" class="form-control" [(ngModel)]="userAddress.landmark" name="landmark" required>
+            <small class="text-danger" *ngIf="!userAddress.landmark && showErrorMsg">This field is required.</small>
           </div>
           <div class="mb-3">
             <label class="form-label">Area</label>
             <input type="text" class="form-control" [(ngModel)]="userAddress.area" name="area" required>
+            <small class="text-danger" *ngIf="!userAddress.area && showErrorMsg">This field is required.</small>
           </div>
           <div class="mb-3">
             <label class="form-label">Mobile Number</label>
             <input type="text" class="form-control" [(ngModel)]="userAddress.mobile" name="mobile" required>
+            <small class="text-danger" *ngIf="!userAddress.mobile && showErrorMsg">This field is required.</small>
           </div>
         </form>
         

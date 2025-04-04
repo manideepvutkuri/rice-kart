@@ -28,6 +28,7 @@ export class CartComponent implements OnInit {
     area: '',
     mobile: ''
   };
+  showErrorMsg = false;
 
   constructor(private cartService: CartService,private router: Router,private location: Location,private orderService: OrderService,private authService: AuthService) {}
 
@@ -170,10 +171,12 @@ openAddressModal() {
 // ✅ Validate & Proceed to Payment
 confirmAddress() {
   if (!this.userAddress.flatNo || !this.userAddress.landmark || !this.userAddress.area || !this.userAddress.mobile) {
-    alert("Please fill all address fields!");
+    // alert("Please fill all address fields!");
+    this.showErrorMsg = true;
+    
     return;
   }
-  
+  this.showErrorMsg = false;
   // Close Modal & Proceed to Payment
   const modalElement = document.getElementById('addressModal');
   if (modalElement) {
