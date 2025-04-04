@@ -96,7 +96,7 @@ confirmMobile = '';
         this.router.navigate(['/']);
       } else {
         // Signup validation
-        if (!this.name || !this.address || !this.confirmPassword || !this.mobile || !this.confirmMobile) {
+        if (!this.name  || !this.confirmPassword || !this.mobile || !this.confirmMobile) {
           alert('All fields are required for Signup!');
           return;
         }
