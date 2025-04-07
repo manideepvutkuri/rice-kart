@@ -25,6 +25,7 @@ import { AboutUsComponent } from './app/pages/about-us/about-us.component';
 import { HelpSupportComponent } from './app/pages/help-support/help-support.component';
 import { TermsConditionsComponent } from './app/pages/terms-conditions/terms-conditions.component';
 import { PrivacyPolicyComponent } from './app/pages/privacy-policy/privacy-policy.component';
+import { MyAccountComponent } from './app/pages/my-account/my-account.component';
 
 // ✅ Firebase configuration (replace with your own Firebase keys)
 const firebaseConfig = {
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'help-support', component: HelpSupportComponent },
   { path: 'terms-conditions', component: TermsConditionsComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'my-account', component: MyAccountComponent },
   { path: '**', redirectTo: '' }
 ];
 

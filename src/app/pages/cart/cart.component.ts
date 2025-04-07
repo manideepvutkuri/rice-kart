@@ -95,11 +95,19 @@ export class CartComponent implements OnInit {
   //   this.totalPrice = this.getTotalPrice();
   // }
   
+  // updateQuantity(index: number, change: number) {
+  //   if (this.cartItems[index].quantity + change > 0) {
+  //     this.cartItems[index].quantity += change;
+  //   }
+  // }
   updateQuantity(index: number, change: number) {
-    if (this.cartItems[index].quantity + change > 0) {
-      this.cartItems[index].quantity += change;
+    const updatedQty = this.cartItems[index].quantity + change;
+    if (updatedQty > 0) {
+      this.cartItems[index].quantity = updatedQty;
+      this.cartItems = [...this.cartItems]; // <-- Trigger change detection
     }
   }
+  
   
   clearCart() {
     this.cartService.clearCart();
@@ -210,12 +218,14 @@ confirmAddress() {
   }
 
   console.log("User Address:", this.userAddress);
+  // return this.cartItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
   
   const totalAmount = cartItems.reduce((sum, item) => {
     const price = item.price || 0;
     const quantity = item.quantity || 1;
     console.log(`Item: ${item.name}, Price: ${price}, Quantity: ${quantity}, Subtotal: ${price * quantity}`);
-    return sum + item.price;
+    // return sum + item.price;
+    return this.cartItems.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
   }, 0);
   
   // return this.cartItems.reduce((sum, item) => sum + item.price, 0);
@@ -314,5 +324,41 @@ confirmAddress() {
   closeFailureModal() {
     window.location.reload();
   }
-  
+  getCartQuantity(product: any): number {
+    let quantity = 0;
+    this.cartService.getCartItems().subscribe(cart => {
+      const item = cart.find(p => p.id === product.id);
+      quantity = item ? item.quantity : 0;
+    });
+    return quantity;
+  }
+  increaseQuantity(product?: any) {
+    if (product) {
+      let quantity = this.getCartQuantity(product) + 1;
+      this.cartService.addToCart({ ...product, quantity });
+    }
+    //  else {
+    //   this.cartItemQuantity++;
+    //   this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
+    // }
+  }
+  decreaseQuantity(product?: any) {
+    if (product) {
+      let quantity = this.getCartQuantity(product);
+      if (quantity > 1) {
+        this.cartService.addToCart({ ...product, quantity: quantity - 1 });
+      } else {
+        this.cartService.removeFromCart(product.id);
+      }
+    }
+    //  else {
+    //   if (this.cartItemQuantity > 1) {
+    //     this.cartItemQuantity--;
+    //     this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
+    //   } else {
+    //     this.cartService.removeFromCart(this.product.id);
+    //     this.cartItemQuantity = 0;
+    //   }
+    // }
+  }
 }

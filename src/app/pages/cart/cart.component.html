@@ -38,15 +38,15 @@
             <div class="cart-content">
               <div class="cart-header">
                 <h5 class="fw-bold">{{ item.name }}</h5>
-                <button class="btn btn-danger btn-sm fw-bold" (click)="removeItem(item.id)">
+                <button class="btn btn-danger btn-sm fw-bold" (click)="removeItem(item)">
                   ❌
                 </button>
               </div>
               <p class="text-muted">Price: <span class="fw-bold">₹{{ item.price }}</span></p>
               <div class="quantity-controls">
-                <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(i, -1)">➖</button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="decreaseQuantity(item)">➖</button>
                 <span class="fw-bold mx-2">{{ item.quantity }}</span>
-                <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(i, 1)">➕</button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="increaseQuantity(item)">➕</button>
               </div>
             </div>
     

@@ -1,0 +1,25 @@
+<div class="container my-5">
+    <h2 class="fw-bold text-primary mb-4"><i class="bi bi-person-circle me-2"></i>My Account</h2>
+  
+    <div class="card shadow-sm p-4 mb-4">
+      <h5 class="fw-semibold mb-3"><i class="bi bi-person-lines-fill text-success me-2"></i>Personal Information</h5>
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Mobile:</strong> {{ user.phone }}</p>
+      <p><strong>Email:</strong> {{ user.email || 'N/A' }}</p>
+      <!-- <p><strong>Address:</strong> {{ user.address }}</p> -->
+      <!-- <button class="btn btn-outline-primary mt-2"><i class="bi bi-pencil-square me-1"></i> Edit Info</button> -->
+    </div>
+  
+    <div class="card shadow-sm p-4 mb-4">
+      <h5 class="fw-semibold mb-3"><i class="bi bi-bag-check-fill text-warning me-2"></i>Order History</h5>
+      <p>View your past orders and track their status.</p>
+      <a (click)="navigateTo('/order-history')" class="btn btn-outline-success"><i class="bi bi-clock-history me-1"></i> View Orders</a>
+    </div>
+  
+    <div class="card shadow-sm p-4 mb-4">
+      <h5 class="fw-semibold mb-3"><i class="bi bi-shield-lock-fill text-dark me-2"></i>Security Settings</h5>
+      <p>Manage your password and login methods.</p>
+      <button class="btn btn-outline-danger"><i class="bi bi-lock-fill me-1" (click)="onForgotPassword()"></i> Change Password</button>
+    </div>
+  </div>
+  

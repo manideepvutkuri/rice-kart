@@ -40,6 +40,8 @@
 <header class="header" *ngIf="!isLoginPage()">
     <i class="fas fa-user-circle profile-icon" (click)="toggleSidebar()"></i>
     <div class="logo">🍚 fyben</div>
+    <button  (click)="gotoadmin()">Admin Panel</button>  
+    <button (click)="adminProd()">Add productd by Admin</button> 
     <!-- <nav>
         
       <a  class="cart-button" (click)="cart()">
@@ -50,6 +52,8 @@
         <i class="material-icons">logout</i>
     </button> -->
     <i class="material-icons" (click)="logout()">logout</i>
+    <!-- <i class="bi bi-box-arrow-right fs-5 text-danger" role="button" data-bs-toggle="modal" data-bs-target="#logoutModal"></i> -->
+
   </header>
 
 
@@ -58,6 +62,7 @@
     <button class="close-btn" (click)="toggleSidebar()">×</button>
     <ul>
         <li><button (click)="navigateTo('/')">🏠 Home</button></li>
+        <li><button (click)="navigateTo('/my-account')">👤 my account</button></li>
         <li><button (click)="navigateTo('/order-history')">📜 Order History</button></li>
         <li><button (click)="navigateTo('/about-us')">ℹ️ About Us</button></li>
         <li><button (click)="navigateTo('/help-support')">❓ Help & Support</button></li>
@@ -70,3 +75,23 @@
   
   <!-- Overlay (to close the menu when clicked outside) -->
   <div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+  <!-- Logout Confirmation Modal -->
+<!-- <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-3 shadow">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger" id="logoutModalLabel"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirm Logout</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to log out?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="logout()">Yes, Logout</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
