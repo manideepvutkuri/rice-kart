@@ -73,7 +73,7 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit() {
 
     this.cartService.getCartItems().subscribe(items => {
-      this.cartCount = items.length; // Live cart count update
+      this.cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
     });
     // 1️⃣ Try to get product from navigation state
     if (history.state.product) {
@@ -115,7 +115,8 @@ export class ProductDetailsComponent implements OnInit {
     if (product) {
       let quantity = this.getCartQuantity(product) + 1;
       this.cartService.addToCart({ ...product, quantity });
-    } else {
+    } 
+    else {
       this.cartItemQuantity++;
       this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
     }
@@ -124,12 +125,14 @@ export class ProductDetailsComponent implements OnInit {
   decreaseQuantity(product?: any) {
     if (product) {
       let quantity = this.getCartQuantity(product);
-      if (quantity > 1) {
-        this.cartService.addToCart({ ...product, quantity: quantity - 1 });
+      if (quantity > 0) {
+        this.cartService.reduceCartQuantity(product)
+        // this.cartService.addToCart({ ...product, quantity: quantity - 1 });
       } else {
         this.cartService.removeFromCart(product.id);
       }
-    } else {
+    } 
+    else {
       if (this.cartItemQuantity > 1) {
         this.cartItemQuantity--;
         this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });

@@ -34,7 +34,8 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.cartService.getCartItems().subscribe(items => {
-      this.cartItems = this.groupCartItems(items);
+      // this.cartItems = this.groupCartItems(items);
+      this.cartItems = items.filter(item => item.quantity > 0);
       this.totalPrice = this.getTotalPrice();
     });
   }
@@ -332,26 +333,57 @@ confirmAddress() {
     });
     return quantity;
   }
+  // increaseQuantity(product?: any) {
+  //   if (product) {
+  //     let quantity = this.getCartQuantity(product) + 1;
+  //     this.cartService.addToCart({ ...product, quantity });
+  //   }
+  //   //  else {
+  //   //   this.cartItemQuantity++;
+  //   //   this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
+  //   // }
+  // }
+  // decreaseQuantity(product?: any) {
+  //   if (product) {
+  //     let quantity = this.getCartQuantity(product);
+  //     if (quantity > 1) {
+  //       this.cartService.addToCart({ ...product, quantity: quantity - 1 });
+  //     } else {
+  //       this.cartService.removeFromCart(product.id);
+  //     }
+  //   }
+  //   //  else {
+  //   //   if (this.cartItemQuantity > 1) {
+  //   //     this.cartItemQuantity--;
+  //   //     this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
+  //   //   } else {
+  //   //     this.cartService.removeFromCart(this.product.id);
+  //   //     this.cartItemQuantity = 0;
+  //   //   }
+  //   // }
+  // }
   increaseQuantity(product?: any) {
     if (product) {
       let quantity = this.getCartQuantity(product) + 1;
       this.cartService.addToCart({ ...product, quantity });
-    }
-    //  else {
+    } 
+    // else {
     //   this.cartItemQuantity++;
     //   this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });
     // }
   }
+
   decreaseQuantity(product?: any) {
     if (product) {
       let quantity = this.getCartQuantity(product);
       if (quantity > 1) {
-        this.cartService.addToCart({ ...product, quantity: quantity - 1 });
+        this.cartService.reduceCartQuantity(product)
+        // this.cartService.addToCart({ ...product, quantity: quantity - 1 });
       } else {
         this.cartService.removeFromCart(product.id);
       }
-    }
-    //  else {
+    } 
+    // else {
     //   if (this.cartItemQuantity > 1) {
     //     this.cartItemQuantity--;
     //     this.cartService.addToCart({ ...this.product, quantity: this.cartItemQuantity });

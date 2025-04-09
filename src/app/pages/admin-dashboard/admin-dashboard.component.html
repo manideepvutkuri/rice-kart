@@ -22,7 +22,7 @@
           <td>{{ order.userEmail }}</td>
           <td>
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let item of order.items">{{ item.name }} - ₹{{ item.price }}</li>
+              <li *ngFor="let item of order.items">{{ item.name }} - ₹{{ item.price }}x {{ item.quantity }}</li>
             </ul>
           </td>
           <td>{{ order.mobile || 'N/A' }}</td>

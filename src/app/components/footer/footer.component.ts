@@ -13,7 +13,7 @@ import { CartService } from '../../services/cart.service';
     constructor(private cartService: CartService,private router: Router) {}
     ngOnInit(){
       this.cartService.getCartItems().subscribe(items => {
-        this.cartCount = items.length; // Live cart count update
+        this.cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
       });
     }
     navigateTo(path: string) {

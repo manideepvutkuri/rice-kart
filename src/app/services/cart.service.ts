@@ -5,18 +5,36 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems: any[] = []; 
+  private cartItems: any[] = [];
   private cartSubject = new BehaviorSubject<any[]>(this.cartItems); // Observable Cart
 
-  constructor() {}
+  constructor() { }
 
   // Add item to cart
   addToCart(product: any) {
-    this.cartItems.push(product);
+    console.log('adding to cart');
+
+    console.log(this.cartItems);
+    console.log(product);
+
+    const producIndex = this.cartItems.findIndex(d => d.id === product.id)
+    if (producIndex == -1) {
+      this.cartItems.push(product);
+    } else {
+      this.cartItems[producIndex].quantity = this.cartItems[producIndex].quantity + 1
+    }
+
     this.cartSubject.next(this.cartItems); // Update subscribers
     console.log('Cart Items:', this.cartItems);
   }
 
+  reduceCartQuantity(product:any){
+    const producIndex = this.cartItems.findIndex(d => d.id === product.id)
+    if (producIndex !== -1) {
+      this.cartItems[producIndex].quantity = this.cartItems[producIndex].quantity - 1
+      this.cartSubject.next(this.cartItems); // Update subscribers
+    }
+  }
   // Get cart items as Observable (for live updates)
   getCartItems(): Observable<any[]> {
     return this.cartSubject.asObservable();
@@ -52,6 +70,6 @@ export class CartService {
   updateCart(updatedCart: any[]) {
     localStorage.setItem('cart', JSON.stringify(updatedCart)); // Update localStorage
   }
-  
-  
+
+
 }
