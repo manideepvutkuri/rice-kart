@@ -63,7 +63,7 @@
   </nav>
 </header> -->
 
-<div class="home-container">
+<!-- <div class="home-container">
   
   <section class="hero">
     <h1>Discover the Finest Quality Rice</h1>
@@ -83,4 +83,81 @@
       </div>
     </div>
   </div>
+</div> -->
+
+
+ <!-- 🧃 Dynamic Products Section (Styled like Rice) -->
+<!-- <div *ngFor="let category of categorizedProducts | keyvalue">
+  <h2 class="mb-3">{{ category.key }}</h2>
+
+  <div class="product-container">
+    <div class="product-card" *ngFor="let product of category.value">
+      <img [src]="product.imageUrl" alt="{{ product.name }}">
+      <div class="product-info">
+        <h3>{{ product.name }}</h3>
+        <p class="price">₹{{ product.price }}</p>
+        <button (click)="viewDetails(product)" class="details-button">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="home-container">
+
+  <!-- 🎯 Hero Section -->
+  <section class="hero">
+    <h1>Discover the Finest Quality Products</h1>
+    <p>Hand-picked & organically sourced for your kitchen.</p>
+  </section>
+
+  <!-- 🗂️ Category Filter Buttons -->
+  <!-- <div class="category-tabs">
+    <button *ngFor="let cat of categoryKeys"
+            [class.active]="cat === selectedCategory"
+            (click)="filterCategory(cat)">
+      {{ cat }}
+    </button>
+  </div> -->
+
+  <!-- 🗂️ Category Filter Buttons -->
+<!-- <div class="category-tabs d-flex gap-2 flex-wrap justify-content-center my-3">
+  <button *ngFor="let cat of categoryKeys"
+          [class.active]="cat === selectedCategory"
+          (click)="filterCategory(cat)"
+          class="btn btn-light category-btn shadow-sm">
+    <i [ngClass]="getCategoryIcon(cat)" class="me-2"></i>
+    {{ cat }}
+  </button>
+</div> -->
+
+<div class="category-tabs">
+  <div class="category-scroll">
+    <button *ngFor="let cat of categoryKeys"
+            [class.active]="cat === selectedCategory"
+            (click)="filterCategory(cat)">
+      <i [ngClass]="getCategoryIcon(cat)"></i> {{ cat }}
+    </button>
+  </div>
+</div>
+
+  <!-- 🛍️ Filtered Products Section -->
+  <div *ngIf="categorizedProducts[selectedCategory]">
+    <!-- <h2 class="mb-3">{{ selectedCategory }}</h2> -->
+    <div class="product-container">
+      <div class="product-card" *ngFor="let product of categorizedProducts[selectedCategory]">
+        <img [src]="product.imageUrl" alt="{{ product.name }}">
+        <div class="product-info">
+          <h3>{{ product.name }}</h3>
+          <p class="price">₹{{ product.price }}</p>
+          <button (click)="viewDetails(product)" class="details-button">
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
