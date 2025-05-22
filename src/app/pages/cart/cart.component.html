@@ -44,9 +44,9 @@
               </div>
               <p class="text-muted">Price: <span class="fw-bold">₹{{ item.price }}</span></p>
               <div class="quantity-controls">
-                <button class="btn btn-sm btn-outline-secondary" (click)="decreaseQuantity(item)">➖</button>
-                <span class="fw-bold mx-2">{{ item.quantity }}</span>
-                <button class="btn btn-sm btn-outline-secondary" (click)="increaseQuantity(item)">➕</button>
+                <button class="qty-btn" (click)="decreaseQuantity(item)">-</button>
+                <span class="mx-2">{{ item.quantity }}</span>
+                <button class="qty-btn" (click)="increaseQuantity(item)">+</button>
               </div>
             </div>
     

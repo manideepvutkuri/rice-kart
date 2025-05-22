@@ -123,3 +123,14 @@ p.text-muted {
   text-align: center;
   margin-top: 20px;
 }
+.qty-btn {
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 30px;
+}
