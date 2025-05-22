@@ -106,9 +106,62 @@
 
 
 <div class="home-container">
+  
+  
+  <!-- <div class="product-container">
+    <div
+      class="product-card"
+      *ngFor="let product of filteredProducts"
+    >
+      
+        <img
+          [src]="product.imageUrl"
+          
+          alt="{{ product.name }}"
+        />
+        <div class="product-info">
+          <h3 >{{ product.name }}</h3>
+          <p class="price">₹{{ product.price }}</p>
+          <button class="details-button" (click)="viewDetails(product)">View Details</button>
+        </div>
+      
+    </div>
+  </div> -->
+    
+
 
   <!-- 🎯 Hero Section -->
   <section class="hero">
+    <div class="input-group mb-3 rounded-search">
+      <span class="input-group-text bg-white border-end-0">
+        <i class="bi bi-search text-muted"></i>
+      </span>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        [placeholder]="currentPlaceholder"
+        class="form-control border-start-0"
+        placeholder="Search products..."
+      />
+    </div>
+    <div class="product-container" *ngIf="searchTerm && filteredProducts.length > 0; else noSearchOrNoResults">
+      <div class="product-card" *ngFor="let product of filteredProducts">
+    
+        <img [src]="product.imageUrl" alt="{{ product.name }}" />
+        <div class="product-info">
+          <h3 style="color: black;">{{ product.name }}</h3>
+          <p class="price">₹{{ product.price }}</p>
+          <button class="details-button" (click)="viewDetails(product)">View Details</button>
+        </div>
+    
+      </div>
+    </div>
+    <ng-template #noSearchOrNoResults>
+      <div class="text-center text-muted mt-2" *ngIf="searchTerm">
+        No products found for "{{ searchTerm }}"
+      </div>
+    </ng-template>
     <h1>Discover the Finest Quality Products</h1>
     <p>Hand-picked & organically sourced for your kitchen.</p>
   </section>
@@ -145,7 +198,7 @@
 
   <!-- 🛍️ Filtered Products Section -->
   <div *ngIf="categorizedProducts[selectedCategory]">
-    <!-- <h2 class="mb-3">{{ selectedCategory }}</h2> -->
+   
     <div class="product-container">
       <div class="product-card" *ngFor="let product of categorizedProducts[selectedCategory]">
         <img [src]="product.imageUrl" alt="{{ product.name }}">
@@ -159,5 +212,27 @@
       </div>
     </div>
   </div>
+
+
+
+  <!-- <div class="product-container">
+    <div
+      class="product-card"
+      *ngFor="let product of filteredProducts"
+    >
+      
+        <img
+          [src]="product.imageUrl"
+          
+          alt="{{ product.name }}"
+        />
+        <div class="product-info">
+          <h3 >{{ product.name }}</h3>
+          <p class="price">₹{{ product.price }}</p>
+          <button class="details-button" (click)="viewDetails(product)">View Details</button>
+        </div>
+      
+    </div>
+  </div> -->
 
 </div>

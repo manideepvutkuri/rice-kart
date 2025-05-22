@@ -76,15 +76,18 @@ p.text-muted {
 /* Buttons */
 .cart-buttons {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   gap: 10px;
+  padding-bottom: 10px;
+  align-items: center;
+    justify-content: center;
 }
 
 .cart-buttons button {
-  width: 100%;
+  /* width: 100%;
   padding: 12px;
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: bold; */
   border-radius: 10px;
 }
 

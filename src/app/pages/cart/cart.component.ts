@@ -29,6 +29,10 @@ export class CartComponent implements OnInit {
     mobile: ''
   };
   showErrorMsg = false;
+  get isMobileInvalid(): boolean {
+    return !this.userAddress.mobile || this.userAddress.mobile.length !== 10;
+  }
+  
 
   constructor(private cartService: CartService,private router: Router,private location: Location,private orderService: OrderService,private authService: AuthService) {}
 
@@ -392,5 +396,8 @@ confirmAddress() {
     //     this.cartItemQuantity = 0;
     //   }
     // }
+  }
+  sanitizeMobile() {
+    this.userAddress.mobile = this.userAddress.mobile.replace(/[^0-9]/g, '');
   }
 }

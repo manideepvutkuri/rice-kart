@@ -95,7 +95,7 @@
 /* Mobile Responsive Design */
 @media (max-width: 480px) {
   .product-container {
-      grid-template-columns: repeat(2, 1fr); /* 2 columns */
+      grid-template-columns: repeat(3, 1fr); /* 2 columns */
   }
 
   .product-card {
@@ -128,7 +128,8 @@
 } */
 
 .home-container {
-  background: linear-gradient(to bottom right, #2f4e6d, #e3e6ea); /* Light Premium Gradient */
+  background: linear-gradient(to bottom right, #2f4e6d, #e3e6ea); 
+  /* background:  #554d40 */
   /* min-height: 100vh;
   padding: 20px;
   display: flex;
@@ -227,6 +228,20 @@ body {
 }
 
 .category-scroll button.active {
-  background-color: #8395af !important;
+  background-color: #152945!important;
   color: white;
+}
+.rounded-search {
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group-text {
+  border-radius: 2rem 0 0 2rem !important;
+}
+
+.form-control {
+  border-radius: 0 2rem 2rem 0 !important;
+  box-shadow: none !important;
 }

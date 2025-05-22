@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">fyben</string>
+    <string name="title_activity_main">fyben</string>
+    <string name="package_name">fyben</string>
+    <string name="custom_url_scheme">com.fyben.shop</string>
+</resources>
