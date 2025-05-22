@@ -9,7 +9,7 @@
 /* Cart Container */
 .cart-container {
   border-radius: 15px;
-  padding: 20px;
+  /* padding: 20px; */
   background: linear-gradient(to bottom, #ffffff, #f8f9fa);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
@@ -63,7 +63,7 @@
 
 /* Price Text */
 p.text-muted {
-  margin-top: 5px;
+  margin-top: -12px;
   font-size: 14px;
 }
 
@@ -71,6 +71,15 @@ p.text-muted {
 .cart-footer {
   text-align: center;
   margin-top: 20px;
+   
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    /* padding: 1rem; */
+    z-index: 1000;
+  
+  
 }
 
 /* Buttons */
@@ -78,7 +87,7 @@ p.text-muted {
   display: flex;
   /* flex-direction: column; */
   gap: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 17px;
   align-items: center;
     justify-content: center;
 }
@@ -103,7 +112,7 @@ p.text-muted {
 .cart-item {
   display: flex;
   align-items: center;
-  gap: 15px;
+  /* gap: 15px; */
 }
 .cart-image img {
   width: 80px;
