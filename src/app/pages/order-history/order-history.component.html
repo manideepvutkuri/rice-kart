@@ -129,7 +129,8 @@
         <div class="card shadow-lg rounded-3 border-0">
           <div class="card-body">
             <h5 class="card-title fw-bold text-primary">Order ID: {{ order.id }}</h5>
-            <p class="text-dark"><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
+            <p class="orderTotal text-dark" ><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
+            <h6><strong>paymentId:</strong> {{order.paymentId}}</h6>
             <!-- <p>
               <strong>status: </strong> <span class="badge bg-warning text-dark px-3 py-2">{{ order.status }}</span>
             </p> -->

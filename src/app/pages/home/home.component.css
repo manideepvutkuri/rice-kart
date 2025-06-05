@@ -77,6 +77,7 @@
 .product-card h3 {
   font-size: 13px; /* Reduce title size */
   margin-bottom: 5px;
+  margin-top: 8px;
 }
 
 .product-card .price {

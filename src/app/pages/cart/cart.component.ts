@@ -244,12 +244,13 @@ confirmAddress() {
   
     // ✅ Razorpay Payment Integration
     const options = {
-      key: "rzp_test_TQV67Ri1UfCvd9",
+      // key: "rzp_test_TQV67Ri1UfCvd9",
+      key: "rzp_live_DLkEh42cip9fsA",
       amount: totalAmount * 100, // Razorpay expects amount in paisa
       currency: "INR",
-      name: "Rice Store",
-      description: "Order Payment",
-      image: "/assets/images/rrr.jpg",
+      name: "fyben",
+      description: "fyben Order Payment",
+      image: "/assets/images/fyben.jpeg",
       handler: async (response: any) => {
         console.log("Payment Successful:", response);
         await this.storeOrder(response.razorpay_payment_id, cartItems, totalAmount, user);
