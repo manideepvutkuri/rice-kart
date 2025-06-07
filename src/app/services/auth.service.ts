@@ -141,7 +141,7 @@
 // }
 
 import { Injectable } from '@angular/core';
-import { Auth,sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification } from '@angular/fire/auth';
+import { Auth,sendPasswordResetEmail, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification, setPersistence, browserLocalPersistence } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
@@ -154,17 +154,38 @@ export class AuthService {
   user$ = this.userSubject.asObservable();
 
   constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
-    onAuthStateChanged(this.auth, async (user) => {
-      if (user) {
-        const userData = await this.getUserRole(user.uid);
-        localStorage.setItem('user', JSON.stringify(userData)); // Store user details locally
-        console.log('User logged in:', userData);
-        this.userSubject.next(userData);
-      } else {
-        localStorage.removeItem('user');
-        this.userSubject.next(null);
-      }
+    const cachedUser = localStorage.getItem('user');
+    if (cachedUser) {
+      this.userSubject.next(JSON.parse(cachedUser));
+    }
+    setPersistence(this.auth, browserLocalPersistence)
+    .then(() => {
+      onAuthStateChanged(this.auth, async (user) => {
+        if (user) {
+          const userData = await this.getUserRole(user.uid);
+          localStorage.setItem('user', JSON.stringify(userData)); // Store user details locally
+          console.log('User logged in:', userData);
+          this.userSubject.next(userData);
+        } else {
+          localStorage.removeItem('user');
+          this.userSubject.next(null);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error('Failed to set auth persistence:', error);
     });
+    // onAuthStateChanged(this.auth, async (user) => {
+    //   if (user) {
+    //     const userData = await this.getUserRole(user.uid);
+    //     localStorage.setItem('user', JSON.stringify(userData)); // Store user details locally
+    //     console.log('User logged in:', userData);
+    //     this.userSubject.next(userData);
+    //   } else {
+    //     localStorage.removeItem('user');
+    //     this.userSubject.next(null);
+    //   }
+    // });
   }
   async resetPassword(email: string) {
     try {

@@ -39,7 +39,7 @@
 
 <header class="header" *ngIf="!isLoginPage()">
     <i class="fas fa-user-circle profile-icon" (click)="toggleSidebar()"></i>
-    <div class="logo">12fyben</div>
+    <div class="logo">fyben</div>
     <button *ngIf="isAdmin$ | async" (click)="gotoadmin()">Admin Panel</button>  
     <button *ngIf="isAdmin$ | async" (click)="adminProd()">Add productd by Admin</button> 
     <!-- <nav>

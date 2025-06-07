@@ -7,6 +7,8 @@ import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
 import { firstValueFrom } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import confetti from 'canvas-confetti';
+
 
 declare var Razorpay: any;
 declare var bootstrap: any;
@@ -33,7 +35,7 @@ export class CartComponent implements OnInit {
     return !this.userAddress.mobile || this.userAddress.mobile.length !== 10;
   }
   
-
+  showSuccessModal = false;
   constructor(private cartService: CartService,private router: Router,private location: Location,private orderService: OrderService,private authService: AuthService) {}
 
   ngOnInit() {
@@ -305,16 +307,35 @@ confirmAddress() {
   }
   
   // ✅ Open Payment Success Modal
+  // openSuccessModal() {
+  //   const modalElement = document.getElementById('successModal');
+  //   if (modalElement) {
+  //     const modal = new bootstrap.Modal(modalElement);
+  //     modal.show(); // ✅ Show modal
+  //   } else {
+  //     console.error("Success modal element not found.");
+  //   }
+  // }
   openSuccessModal() {
-    const modalElement = document.getElementById('successModal');
-    if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show(); // ✅ Show modal
-    } else {
-      console.error("Success modal element not found.");
-    }
+    this.showSuccessModal = true;
+    this.launchConfetti();
   }
-  
+  launchConfetti() {
+    confetti({
+      particleCount: 150,
+      spread: 80,
+      origin: { y: 0.6 },
+      scalar: 1.2,
+    });
+    const canvasEl = document.querySelector('canvas');
+  if (canvasEl) {
+    canvasEl.style.zIndex = '2000'; // Higher than Bootstrap modal (1050)
+    canvasEl.style.position = 'fixed';
+    canvasEl.style.top = '0';
+    canvasEl.style.left = '0';
+    canvasEl.style.pointerEvents = 'none'; // So it doesn't block clicks
+  }
+  }
   // ✅ Open Payment Failure Modal
   openFailureModal() {
     const failureModal = new bootstrap.Modal(document.getElementById('paymentFailureModal'));
@@ -323,9 +344,12 @@ confirmAddress() {
   
   // ✅ Close Success Modal and Redirect
   closeSuccessModal() {
+    // this.router.navigate(['/order-history']);
+    this.showSuccessModal = false;
+  }
+  GoToOrders(){
     this.router.navigate(['/order-history']);
   }
-  
   // ✅ Close Failure Modal and Retry Payment
   closeFailureModal() {
     window.location.reload();
